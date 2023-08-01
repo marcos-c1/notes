@@ -7,9 +7,9 @@ import { MdOutlineLightMode } from "react-icons/md";
 
 import { ThemeContext } from "./contexts/Theme";
 
-const Menu = ({ isLogin, theme }) => {
+const Menu = ({ isLogin }) => {
     const [login, setLogin] = useState(false);
-    const [colorScheme, setColorScheme] = useState(theme);
+    const [colorScheme, setColorScheme] = useContext(ThemeContext);
 
     function loginModal() {
         showLoginMenu()
@@ -28,14 +28,14 @@ const Menu = ({ isLogin, theme }) => {
 
     function switchMode(e) {
         let html = document.querySelector("html");
-        if (colorScheme == "black") {
-            html.style.color = "var(--font-color-white-mode)";
-            html.style.backgroundColor = "var(--bg-primary-white-mode)";
-            setColorScheme("white");
+        if (colorScheme == "dark") {
+            html.style.color = "var(--font-color-light-mode)";
+            html.style.backgroundColor = "var(--bg-primary-light-mode)";
+            setColorScheme("light");
         } else {
             html.style.color = "var(--font-color-dark-mode)";
             html.style.backgroundColor = "var(--bg-primary-dark-mode)";
-            setColorScheme("black");
+            setColorScheme("dark");
         }
     }
 
@@ -67,8 +67,8 @@ const Menu = ({ isLogin, theme }) => {
                 <ul className="container__menu__right" >
                     <li className="icon icon__mode" onClick={switchMode}>
                         <ThemeContext.Provider value={colorScheme}>
-                            {colorScheme == "black" ?
-                                <MdOutlineLightMode id="white-mode" size={20} /> :
+                            {colorScheme == "dark" ?
+                                <MdOutlineLightMode id="light-mode" size={20} /> :
                                 <MdDarkMode id="dark-mode" size={20} />}
                         </ThemeContext.Provider>
                     </li>

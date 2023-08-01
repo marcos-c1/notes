@@ -12,8 +12,8 @@
   --bg-primary-dark-mode: #1d1f2b;
   --font-color-dark-mode: #f7f7f7;
 
-  --bg-primary-white-mode: #f7f7f7;
-  --font-color-white-mode: #1d1f2b;
+  --bg-primary-light-mode: #f7f7f7;
+  --font-color-light-mode: #1d1f2b;
 
   --color-red: #d92027;
   --color-bg-primary: #d0d6df;
@@ -153,6 +153,7 @@ button {
   width: 25%;
   min-height: calc(100vh - 77px);
   justify-items: center;
+  -webkit-user-select: none;
 }
 
 .sidebar__notes {
@@ -161,6 +162,7 @@ button {
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  -webkit-user-select: none;
 }
 
 .sidebar__note {
@@ -168,6 +170,7 @@ button {
   padding-left: 10px;
   padding-bottom: 0.7em;
   width: 100%;
+  -webkit-user-select: none;
 }
 
 .sidebar__note:hover {

@@ -1,11 +1,14 @@
 import MDEditor from '@uiw/react-md-editor';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import rehypeSanitize from 'rehype-sanitize';
+import { ThemeContext } from './contexts/Theme';
 
-const Content = () => {
+const Content = ({ }) => {
     const [text, setText] = useState("");
+    const [colorScheme, setColorScheme] = useContext(ThemeContext);
+
     return (
-        <div className="container__editor" data-color-mode="dark">
+        <div className="container__editor" data-color-mode={colorScheme}>
             <MDEditor
                 className="editor"
                 value={text}
@@ -19,4 +22,4 @@ const Content = () => {
     )
 }
 
-export default Content
+export default Content;
