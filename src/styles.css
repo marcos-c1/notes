@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@500&display=swap');
+
+:root {
+  font-family: 'Poppins', sans-serif;
+
+  color: #f7f7f7;
+  background-color: #1d1f2b;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  border: 0;
+  list-style: none;
+}
+.container {
+  
+  padding-top: 10vh;
+  display: flex;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: 0.75s;
+}
+
+.logo.tauri:hover {
+  filter: drop-shadow(0 0 2em #24c8db);
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+h1 {
+  text-align: center;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  border-color: #396cd8;
+}
+button:active {
+  border-color: #396cd8;
+  background-color: #e8e8e8;
+}
+
+input,
+button {
+  outline: none;
+}
+
+#greet-input {
+  margin-right: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  a:hover {
+    color: #24c8db;
+  }
+
+  input,
+  button {
+    color: #ffffff;
+    background-color: #0f0f0f98;
+  }
+  button:active {
+    background-color: #0f0f0f69;
+  }
+}
+
+.container__menu {
+  box-shadow: 0px 0px 0px 0.1cqmin rgb(63, 63, 63);
+  padding: 20px 10px;
+}
+
+.container__menu > ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px;
+  max-height: 50px;
+}
+
+.container__menu__right {
+  display: flex;
+  flex-direction: row;
+}
+
+.icon {
+  align-self: center;
+  margin-top: 5px;
+}
+.icon__mode {
+  padding: 1px 5px;
+  z-index: 1;
+}
+
+.backdrop__filter {
+  margin-right: 15px;
+  background-color: rgba(255, 255, 255, 0.171);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+.backdrop__filter:hover {
+  cursor: pointer;
+  transition: all 5s ease-in-out;
+  background: transparent;
+}
+
+.container__sidebar {
+  position: block;
+  border-right: 0.1cqmin  solid rgb(63, 63, 63);
+  width: 25%;
+  min-height: calc(100vh - 77px);
+  justify-items: center;
+}
+
+.sidebar__notes {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sidebar__note {
+  padding-left: 20px;
+  padding-top: 1em;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.sidebar__note:hover {
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.034);
+  border: 0.1cqmin solid rgb(63, 63, 63);
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.theme {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.main__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.container__editor {
+  width: 75%;
+  min-height: max-content;
+}
+
+.editor {
+  font-family: 'Poppins', sans-serif;
+  min-height: calc(100vh - 80px);
+}
+
+.w-md-editor-text-pre > code,
+.w-md-editor-text-input {
+  font-size: 1.2em !important;
+  line-height: 24px !important;
+}
+
+.checked {
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.034);
+  width: 85%;
+  border: 0.1cqmin solid rgb(63, 63, 63);
+}
+
+.sidebar__searchbar {
+  display: flex;
+  flex-direction: row;
+}
+
+#searchbar {
+  padding: 0;
+  margin-left: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+  padding-left: 10px;
+}
+
+.searchbar__filter {
+  align-self: center;
+  margin-top: 5px;
+}
+
+#addBtn {
+  margin-left: 10px;
+  background-color: rgba(255, 255, 255, 0.171);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+#addBtn:hover {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.788);
+  color: black;
+}
+
+.flex__row {
+  display: flex;
+  flex-direction: row;
+}
