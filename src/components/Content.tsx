@@ -4,20 +4,19 @@ import rehypeSanitize from 'rehype-sanitize';
 
 const Content = () => {
     const [text, setText] = useState("");
-
-  return (
-    <div className="container__editor" data-color-mode="dark">
-        <MDEditor
-            className="editor"
-            value={text}
-            preview="edit"
-            onChange={(val?: string) => setText(val || "")}
-            previewOptions={{
-                rehypePlugins: [[rehypeSanitize]],
-            }}
-        />
-    </div>
-  )
+    return (
+        <div className="container__editor" data-color-mode="dark">
+            <MDEditor
+                className="editor"
+                value={text}
+                preview="edit"
+                onChange={(val?: string) => setText(val || "")}
+                previewOptions={{
+                    rehypePlugins: [[rehypeSanitize]],
+                }}
+            />
+        </div>
+    )
 }
 
 export default Content
