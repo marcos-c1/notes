@@ -15,7 +15,7 @@ function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
   const [login, setLogin] = useState(false);
-  const [colorScheme, setColorScheme] = useState({});
+  const [colorScheme, setColorScheme] = useState("dark");
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -26,7 +26,7 @@ function App() {
     <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
       <main className="">
         <Menu isLogin={login} />
-        <div className="main__content">
+        <div className="main__content" id="main">
           <SideBar />
           <Content />
         </div>

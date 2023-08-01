@@ -33,13 +33,12 @@
 input {
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
+  padding: 0.6em 1em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   color: #0f0f0f;
   background-color: #ffffff;
-  transition: border-color 0.25s;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -109,17 +108,41 @@ button {
   z-index: 1;
 }
 
-.container__login>input {
+.container__login>form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.container__login>form>input {
   margin-bottom: 1.5em;
 }
 
 .login__link {
   display: flex;
   flex-direction: row;
+  margin-top: 1em;
 }
 
-.login__link>li {
-  margin-right: 5px;
+.login__link>small,
+li {
+  margin-right: 1em;
+}
+
+.login_link>li {
+  padding: 5px;
+}
+
+.flex__column {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.flex__column:hover {
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+  text-decoration: underline;
 }
 
 .menu__login:hover {
@@ -195,13 +218,14 @@ button {
 }
 
 .container__editor {
+  padding-top: 1px;
   width: 75%;
   min-height: max-content;
 }
 
 .editor {
   font-family: 'Poppins', sans-serif;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 75px);
 }
 
 .w-md-editor-text-pre>code,
@@ -239,6 +263,7 @@ button {
 
 #addBtn {
   margin-left: 10px;
+  margin-right: 2.5em;
   background-color: rgba(255, 255, 255, 0.171);
   border-radius: 5px;
   z-index: -1;
@@ -338,4 +363,14 @@ button {
   height: 20px;
   margin-right: 5px;
   stroke: var(--color-text-primary-offset);
+}
+
+#hamburger {
+  display: none;
+  width: 25px;
+  height: 24px;
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
 }

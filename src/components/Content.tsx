@@ -11,6 +11,7 @@ const Content = ({ }) => {
         <div className="container__editor" data-color-mode={colorScheme}>
             <MDEditor
                 className="editor"
+                id="editor"
                 value={text}
                 preview="edit"
                 onChange={(val?: string) => setText(val || "")}
