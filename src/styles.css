@@ -174,9 +174,12 @@ li {
   position: block;
   border-right: 0.1cqmin solid rgb(63, 63, 63);
   width: 25%;
-  min-height: calc(100vh - 77px);
+  max-height: calc(100vh - 77px);
+  min-width: 25%;
   justify-items: center;
   -webkit-user-select: none;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sidebar__notes {
