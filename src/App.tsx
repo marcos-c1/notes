@@ -8,9 +8,11 @@ import Content from "./components/Content";
 import { CiMenuBurger } from "react-icons/ci";
 
 import { ThemeContext } from "./components/contexts/Theme";
+import { LoginContext } from "./components/contexts/Login";
 
 function App() {
   const defaultColorScheme = useContext(ThemeContext);
+  const defaultLogin = useContext(LoginContext);
 
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
@@ -23,15 +25,17 @@ function App() {
   }
 
   return (
-    <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
-      <main className="">
-        <Menu isLogin={login} />
-        <div className="main__content" id="main">
-          <SideBar />
-          <Content />
-        </div>
-      </main>
-    </ThemeContext.Provider>
+    <LoginContext.Provider value={[login, setLogin]}>
+      <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
+        <main className="">
+          <Menu isLogin={login} />
+          <div className="main__content" id="main">
+            <SideBar />
+            <Content />
+          </div>
+        </main>
+      </ThemeContext.Provider>
+    </LoginContext.Provider >
   );
 }
 

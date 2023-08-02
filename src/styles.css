@@ -9,6 +9,8 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  -ms-overflow-style: none;
+
   --bg-primary-dark-mode: #1d1f2b;
   --font-color-dark-mode: #f7f7f7;
 
@@ -28,6 +30,7 @@
   margin: 0;
   border: 0;
   list-style: none;
+  overflow-x: hidden;
 }
 
 input {
@@ -156,11 +159,10 @@ li {
 }
 
 .icon__mode {
-  margin-right: 15px;
   background-color: rgba(255, 255, 255, 0.171);
   border-radius: 5px;
   padding: 0px 5px;
-  padding-top: 5px;
+  padding-top: 3px;
 }
 
 .icon__mode:hover {
@@ -175,11 +177,26 @@ li {
   border-right: 0.1cqmin solid rgb(63, 63, 63);
   width: 25%;
   max-height: calc(100vh - 77px);
-  min-width: 25%;
   justify-items: center;
   -webkit-user-select: none;
-  overflow-y: auto;
-  overflow-x: hidden;
+}
+
+.container__sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.container__sidebar::-webkit-scrollbar-thumb {
+  background-color: #1d1f2b;
+  max-height: 20px;
+  border: 0.1cqmin solid rgb(63, 63, 63);
+  border-radius: 10px;
+}
+
+.container__sidebar::-webkit-scrollbar-track {
+  background: transparent;
+  border: 4px solid transparent;
+  border-radius: 10px;
+  background-clip: content-box;
 }
 
 .sidebar__notes {
@@ -257,16 +274,15 @@ li {
   margin-bottom: 10px;
   margin-right: 5px;
   padding-left: 10px;
+
 }
 
 .searchbar__filter {
   align-self: center;
-  margin-top: 5px;
 }
 
 #addBtn {
-  margin-left: 10px;
-  margin-right: 2.5em;
+  margin-left: 5px;
   background-color: rgba(255, 255, 255, 0.171);
   border-radius: 5px;
   z-index: -1;
@@ -366,14 +382,4 @@ li {
   height: 20px;
   margin-right: 5px;
   stroke: var(--color-text-primary-offset);
-}
-
-#hamburger {
-  display: none;
-  width: 25px;
-  height: 24px;
-  position: fixed;
-  right: 15px;
-  top: 15px;
-  cursor: pointer;
 }

@@ -8,7 +8,7 @@ const Content = ({ }) => {
     const [colorScheme, setColorScheme] = useContext(ThemeContext);
 
     return (
-        <div className="container__editor" data-color-mode={colorScheme}>
+        <div className="container__editor" id="containerEditor" data-color-mode={colorScheme}>
             <MDEditor
                 className="editor"
                 id="editor"

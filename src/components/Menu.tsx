@@ -9,7 +9,7 @@ import { SiGmail } from "react-icons/si";
 import { ThemeContext } from "./contexts/Theme";
 
 const Menu = ({ isLogin }) => {
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState(isLogin);
     const [colorScheme, setColorScheme] = useContext(ThemeContext);
     const [username, setUsername] = useState("");
     const iconSize = 20;
@@ -18,16 +18,16 @@ const Menu = ({ isLogin }) => {
         const menu = document.getElementById("menu");
         const close = document.getElementById("close");
         const sidebar = document.getElementById("sidebar");
-        const mainContent = document.getElementById("main");
+        const containerEditor = document.getElementById("containerEditor");
 
         if (menu?.style.display != "none") {
             sidebar.style.display = "none";
-            mainContent.style.width = "100%";
+            containerEditor.style.width = "100%";
             menu.style.display = "none";
             close.style.display = "block";
         } else {
             sidebar.style.display = "block";
-            mainContent.style.width = "";
+            containerEditor.style.width = "";
             menu.style.display = "block";
             close.style.display = "none";
         }
@@ -47,7 +47,7 @@ const Menu = ({ isLogin }) => {
         showLoginMenu()
         return (
             <div className="container__login" id="login">
-                <h3 style={{ textAlign: "center", paddingBottom: "15px" }}>Log in</h3>
+                <h3 style={{ textAlign: "center", marginBottom: "15px", overflow: "hidden" }}>Log in</h3>
                 <form action="" onSubmit={handleSubmit} method="post">
                     <input type="text" placeholder="Username"></input>
                     <input type="password" placeholder="Password"></input>
