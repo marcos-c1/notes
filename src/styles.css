@@ -305,7 +305,6 @@ li {
 .sidebar__notes__icon {
   padding-right: 15px;
   opacity: 0;
-  transition: opacity .35s ease-in-out;
 }
 
 .sidebar__note.in>div {
@@ -336,7 +335,6 @@ li {
   margin: 0;
   display: block;
   width: 100%;
-  width: 100px;
   padding: 8px;
 }
 
