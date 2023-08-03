@@ -8,11 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { getNotes, createNote, getNoteById, deleteNoteById } = require('../../controllers/noteController');
-require("dotenv").config();
-describe('note route testing', () => {
-    test('get all notes', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield fetch('http://localhost:5000/notes/', {
+describe('test refresh token route', () => {
+    test('testing /refresh', () => __awaiter(void 0, void 0, void 0, function* () {
+        // only needs cookie in session
+        const res = yield fetch('http://localhost:5000/refresh', {
             method: 'GET',
         });
         expect(res.status).toBe(200);

@@ -9,11 +9,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const { getUsers, getUsersById, createUser, deleteUserById } = require('../../controllers/userController');
-const mongoose = require("mongoose");
 require("dotenv").config();
 describe('user route testing', () => {
     test('get all users', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield mongoose.connect(process.env.MONGO_URI);
-        const res = fetch('localhost:5000/users/', 'get').then((r) => expect(r).toBe([]));
+        const res = yield fetch('http://localhost:5000/users', {
+            method: 'GET',
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+        expect(res.status).toBe(200);
+    }));
+    test('create a user', () => __awaiter(void 0, void 0, void 0, function* () {
+        const payload = '{"username": "teste", "password": "123"}';
+        const res = yield fetch('http://localhost:5000/user/register', {
+            method: 'POST',
+            body: payload,
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+        expect(res.status).toBe(200 || 409);
+    }));
+    test('delete a user', () => __awaiter(void 0, void 0, void 0, function* () {
+        const id = "64cbf8da99aa918439a4fa42";
+        const res = yield fetch(`http://localhost:5000/user/${id}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-type": "application/json",
+            },
+        });
+        expect(res.status).toBe(200 || 404);
     }));
 });

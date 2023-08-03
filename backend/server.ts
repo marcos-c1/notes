@@ -1,9 +1,14 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import connect from './config/db';
+import verifyJWT from './middleware/verifyJWT';
 
-import userRouter from './routes/api/userRoute'
-import noteRouter from './routes/api/noteRoute'
+import userRouter from './routes/api/userRoute';
+import noteRouter from './routes/api/noteRoute';
+import authRouter from './routes/api/authRoute';
+import refreshRouter from './routes/api/refreshRoute';
+
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 connect();
@@ -11,10 +16,19 @@ connect();
 const app: Express = express();
 const port = process.env.PORT;
 
+// Middleware for cookies
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+
+// Routes
 app.use('/', userRouter);
 app.use('/', noteRouter);
+app.use('/', authRouter);
+app.use('/', refreshRouter);
 
-//app.use('/notes', routerNote);
+app.use(verifyJWT);
 
 app.listen(port, () => {
     console.log(`[SERVER]: Server is running at http://localhost:${port}`);

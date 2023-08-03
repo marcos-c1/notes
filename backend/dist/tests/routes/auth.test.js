@@ -8,12 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const { getNotes, createNote, getNoteById, deleteNoteById } = require('../../controllers/noteController');
-require("dotenv").config();
-describe('note route testing', () => {
-    test('get all notes', () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield fetch('http://localhost:5000/notes/', {
-            method: 'GET',
+describe('test auth route', () => {
+    test('testing auth/', () => __awaiter(void 0, void 0, void 0, function* () {
+        const payload = '{"username": "teste", "password": "123"}';
+        const res = yield fetch('http://localhost:5000/auth', {
+            method: 'POST',
+            body: payload
         });
         expect(res.status).toBe(200);
     }));

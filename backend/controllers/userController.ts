@@ -21,16 +21,16 @@ const getUserById = async(req, res) => {
 }
 
 const createUser = async (req, res) => {
-    const { user, pwd } = req.body;
+    const { username, password } = req.body;
 
-    const alreadyHasUser = await User.findOne({ username: user }).exec();
+    const alreadyHasUser = await User.findOne({ username: username }).exec();
 
-    if (alreadyHasUser) return res.sendStatus(409).json({'message': 'User already registred'});
+    if (alreadyHasUser) return res.status(409).json({'message': 'User already registred'});
 
     try {
-        const hashedPwd = await bcrypt.hash(pwd, 10);
+        const hashedPwd = await bcrypt.hash(password, 10);
         const result = await User.create({
-            "username": user,
+            "username": username,
             "password": hashedPwd
         });
         res.status(200).json({ 'message': `New user ${user} created!` });
@@ -40,15 +40,15 @@ const createUser = async (req, res) => {
 }
 
 const deleteUserById = async (req, res) => {
-    const id = req.params.id.toNumber();
+    const id = req.params.id;
 
     const hasUser = await User.findById(id).exec();
 
-    if (!hasUser) return res.sendStatus(404).json({'message': 'User not found'});
+    if (!hasUser) return res.status(404).json({'message': 'User not found'});
 
     try {
-        const result = await User.findByIdAndDelete({id});
-        res.status(200).json({ 'message': `${User} deleted!` });
+        const result = await User.findByIdAndDelete(id);
+        res.status(200).json({ 'message': `User ${result} deleted!` });
     } catch (error) {
         res.status(500).json({ 'message': `User not deleted: ${error.message}`});
     }

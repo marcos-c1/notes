@@ -30,14 +30,14 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { user, pwd } = req.body;
-    const alreadyHasUser = yield User.findOne({ username: user }).exec();
+    const { username, password } = req.body;
+    const alreadyHasUser = yield User.findOne({ username: username }).exec();
     if (alreadyHasUser)
-        return res.sendStatus(409).json({ 'message': 'User already registred' });
+        return res.status(409).json({ 'message': 'User already registred' });
     try {
-        const hashedPwd = yield bcrypt.hash(pwd, 10);
+        const hashedPwd = yield bcrypt.hash(password, 10);
         const result = yield User.create({
-            "username": user,
+            "username": username,
             "password": hashedPwd
         });
         res.status(200).json({ 'message': `New user ${user} created!` });
@@ -47,13 +47,13 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 const deleteUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id.toNumber();
+    const id = req.params.id;
     const hasUser = yield User.findById(id).exec();
     if (!hasUser)
-        return res.sendStatus(404).json({ 'message': 'User not found' });
+        return res.status(404).json({ 'message': 'User not found' });
     try {
-        const result = yield User.findByIdAndDelete({ id });
-        res.status(200).json({ 'message': `${User} deleted!` });
+        const result = yield User.findByIdAndDelete(id);
+        res.status(200).json({ 'message': `User ${result} deleted!` });
     }
     catch (error) {
         res.status(500).json({ 'message': `User not deleted: ${error.message}` });
