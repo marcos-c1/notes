@@ -1,14 +1,18 @@
-class DTONote implements INote {
-    public constructor(public title: string, public content: string) {
-        this.title = title
-        this.content = content
+const mongoose = require("mongoose");
+
+const notesSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    content: {
+        type: String,
+        required: false
+    },
+    createdAt: {
+        type: Date,
+
     }
+});
 
-    public insertNote() { }
-
-    public getNote() { }
-
-    public updateNote() { }
-
-    public deleteNote() { }
-}
+module.exports = mongoose.model('Notes', notesSchema);
