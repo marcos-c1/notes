@@ -14,7 +14,7 @@ const getUserById = async(req, res) => {
 	const id = req.params.id;
 	try {
 		const result = await User.findById(id).exec();	
-		res.status(200).json({'message': `${result} deleted`});
+		res.status(200).json(result);
 	} catch(error) {
 		res.status(500).json({'message': `User not found: ${error.message}`});
 	}

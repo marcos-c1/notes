@@ -23,7 +23,7 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const id = req.params.id;
     try {
         const result = yield User.findById(id).exec();
-        res.status(200).json({ 'message': `${result} deleted` });
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(500).json({ 'message': `User not found: ${error.message}` });

@@ -13,15 +13,14 @@ import { NotesContext } from "./components/contexts/Notes";
 
 function App() {
   const defaultColorScheme = useContext(ThemeContext);
-  const defaultNotes = ["Note 1", "Note 2", "Note 3", "Note 4", "Note 5"];
+  const defaultNotes = useContext(NotesContext);
   const defaultLogin = useContext(LoginContext);
 
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
   const [login, setLogin] = useState(false);
   const [colorScheme, setColorScheme] = useState("dark");
-
-  const [notes, setNotes] = useState(defaultNotes);
+  const [notes, setNotes] = useState(["Notes 1", "Notes 2", "Notes 3", "Notes 4", "Notes 5"]);
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command

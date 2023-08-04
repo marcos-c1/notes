@@ -26,6 +26,7 @@ const SideBar = () => {
         let value = e.target.value.toLowerCase().trim()
         if (value) {
             let filter = allNotes.filter((note) => note.toLowerCase().includes(value))
+            console.log(allNotes)
             if (filter.length > 0)
                 setNotes(filter)
             else
@@ -107,7 +108,7 @@ const SideBar = () => {
             <div className="sidebar__searchbar">
                 <input type="text" id="searchbar" onChange={searchNote}></input>
                 <div className="searchbar__filter">
-                    <span className="icon icon__mode"><BsSearch size={15} /></span>
+                    <span className="icon icon__mode" id="filterBtn"><BsSearch size={15} /></span>
                 </div>
                 <div className="searchbar__filter">
                     <span className="icon icon__mode" id="addBtn" onClick={addNote}><IoAddOutline /></span>

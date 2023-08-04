@@ -30,7 +30,7 @@ const getNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, content } = req.body;
-    const createdAt = new Date().now();
+    const createdAt = new Date();
     try {
         const result = yield Note.create({ title: title, content: content, createdAt: createdAt });
         res.status(200).json({ 'message': `New note ${title} created` });

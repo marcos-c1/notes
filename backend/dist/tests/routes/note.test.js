@@ -17,4 +17,19 @@ describe('note route testing', () => {
         });
         expect(res.status).toBe(200);
     }));
+    test('create a note', () => __awaiter(void 0, void 0, void 0, function* () {
+        const payload = '{"title": "how to be a dev", "content", "first you have to be consistent on programming..."}';
+        const res = yield fetch('http://localhost:5000/notes/', {
+            method: 'POST',
+            body: payload
+        });
+        expect(res.status).toBe(200);
+    }));
+    test('get a note by id', () => __awaiter(void 0, void 0, void 0, function* () {
+        const id = 1;
+        const res = yield fetch(`http://localhost:5000/note/${id}`, {
+            method: 'GET',
+        });
+        expect(res.status).toBe(200);
+    }));
 });
