@@ -5,7 +5,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { SelectedContext } from "./contexts/SelectedNote";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNotes, addNewNote, deleteNoteById } from "../redux/notes/noteSlice";
+import { fetchNotes, addNewNote, deleteNoteById, updateNoteById } from "../redux/notes/noteSlice";
 import user from "../api/user";
 import Editor from "./Editor";
 
@@ -81,16 +81,21 @@ const Content = () => {
 
     function createInput(element: HTMLElement | null) {
         const input = document.createElement('input');
-        const note = element;
+        const nodeNote = element;
         input.type = "text";
         input.id = "renameNote";
 
         element?.replaceWith(input);
-
-        input.addEventListener('change', (e) => {
-            note.innerHTML = `${e.target.value}`;
-            notes[selectedNote] = `${e.target.value}`;
-            input.replaceWith(note);
+        console.log(note);
+        input.addEventListener('change', async (e) => {
+            nodeNote.innerHTML = `${e.target.value}`;
+            let newNote = {
+                id: note.notes[selectedNote]._id,
+                title: nodeNote.innerHTML,
+                content: note.notes[selectedNote].content
+            }
+            await dispatch(updateNoteById(newNote)).unwrap();
+            input.replaceWith(nodeNote);
         });
     }
 

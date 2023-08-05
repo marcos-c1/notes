@@ -51,8 +51,28 @@ const noteSlice = createSlice({
         builder.addCase(deleteNoteById.fulfilled, (state, action) => {
             state.loading = false;
             state.notes = state.notes.filter((n) => action.payload != n._id)
+            state.error = '';
         });
         builder.addCase(deleteNoteById.rejected, (state, action) => {
+            state.loading = false;
+            state.notes = [...state.notes];
+            state.error = action.error.message;
+        });
+        builder.addCase(updateNoteById.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateNoteById.fulfilled, (state, action) => {
+            state.loading = false;
+            console.log(action.payload);
+            state.notes = state.notes.map((n) => {
+                if (action.payload._id == n._id) {
+                    return { ...n, title: action.payload.title, content: action.payload.content };
+                }
+                return n;
+            });
+            state.error = '';
+        });
+        builder.addCase(updateNoteById.rejected, (state, action) => {
             state.loading = false;
             state.notes = [...state.notes];
             state.error = action.error.message;
@@ -72,10 +92,16 @@ export const addNewNote = createAsyncThunk('notes/addNewNote', async (newNote: {
     return notes;
 })
 
-export const deleteNoteById = createAsyncThunk('notes/deleteNote', async (id: Number) => {
+export const deleteNoteById = createAsyncThunk('notes/deleteNote', async (id: String) => {
     // the inside "thunk function"]
     await notesAPI.deleteNoteById(id).then((r) => console.log(r));
     return id;
+})
+
+export const updateNoteById = createAsyncThunk('notes/updateNote', async (newNote: { id: String, title: String, content: String }) => {
+    // the inside "thunk function"]
+    const note = notesAPI.updateNoteById(newNote.id, newNote.title, newNote.content).then((r) => r.data);
+    return note;
 })
 
 export const { addNote, deleteNote } = noteSlice.actions;

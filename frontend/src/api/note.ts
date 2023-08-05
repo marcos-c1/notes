@@ -12,13 +12,18 @@ const getNoteById = async (id: Number) => {
     return await axios.get(`http://localhost:5000/note/${id}`)
 }
 
-const deleteNoteById = async (id: Number) => {
+const deleteNoteById = async (id: String) => {
     return await axios.delete(`http://localhost:5000/note/${id}`)
+}
+
+const updateNoteById = async (id: String, title: String, content: String) => {
+    return await axios.put(`http://localhost:5000/note/${id}`, { title, content })
 }
 
 export default {
     getAllNotes,
     getNoteById,
     createNote,
-    deleteNoteById
+    deleteNoteById,
+    updateNoteById
 }
