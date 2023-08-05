@@ -1,26 +1,24 @@
-require('dotenv').config();
-
-const PORT = process.env.PORT;
+import axios from "axios";
 
 const getAllUsers = async () => {
-    return await axios.get(`localhost:${PORT}/users`).then((response) => response.data.map((user) => user.username))
+    return await axios.get(`http://localhost:5000/users`).then((response) => response.data)
 }
 
 const createUser = async (username: String, password: String) => {
-    return await axios.post(`localhost:${PORT}/users`, {username, password}) 
+    return await axios.post(`http://localhost:5000/users`, { username, password })
 }
 
 const getUserById = async (id: Number) => {
-    return await axios.get(`localhost:${PORT}/user/${id}`).then((response) => response.data.username) 
+    return await axios.get(`http://localhost:5000/user/${id}`).then((response) => response.data.username)
 }
 
 const deleteUserById = async (id: Number) => {
-    return await axios.delete(`localhost:${PORT}/note/${id}`) 
+    return await axios.delete(`http://localhost:5000/user/${id}`)
 }
 
-export const {
-	getAllUsers,
-	getUserById,
-	deleteUserById,
-	createUser
+export default {
+    getAllUsers,
+    getUserById,
+    deleteUserById,
+    createUser
 }

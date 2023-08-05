@@ -1,9 +1,12 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { BsSearch, BsTrash, BsDownload } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
 import { CiMenuKebab } from "react-icons/ci";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { NotesContext } from "./contexts/Notes";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNotes } from "../redux/notes/noteSlice";
+import user from "../api/user";
 
 const SideBar = () => {
     const submenu = document.querySelector(".sidebar__menu");
@@ -11,6 +14,13 @@ const SideBar = () => {
     const [selectedNote, setSelectedNote] = useState(-1);
     const [newNoteName, setNewNoteName] = useState(null);
 
+    const dispatch = useDispatch();
+    const note = useSelector((state) => state.notes);
+    const noteStatus = useSelector(state => state.loading);
+
+    useEffect(() => {
+        dispatch(fetchNotes());
+    }, []);
 
     document.addEventListener('click', (e: Event) => {
         if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
@@ -39,6 +49,7 @@ const SideBar = () => {
     function addNote() {
         let size = notes.length + 1;
         setNotes([...notes, `Note ${size.toString()}`])
+        dispatch(addNote(notes))
     }
 
     function handleClickNote(e) {
@@ -115,8 +126,10 @@ const SideBar = () => {
                 </div>
             </div>
             <ul className="sidebar__notes">
-                {
-                    notes.map((item: String, index: number) => {
+                {note.loading && <div>Loading...</div>}
+                {!note.loading && note.error ? <div>Error.. {note.error}</div> : null}
+                {!note.loading && note.notes.length ? (
+                    note.notes.map((item: Object, index: number) => {
                         if (index == 0) {
                             return (
                                 <div className="flex__row sidebar__note checked"
@@ -124,7 +137,7 @@ const SideBar = () => {
                                     onMouseLeave={(e) => e.target.classList.remove("in")}
                                     aria-label={index.toString()}
                                     onClick={handleClickNote}>
-                                    <li key={index} id={`note${index.toString()}`}>{item}</li>
+                                    <li key={index} id={`note${index.toString()}`}>{item.title}</li>
                                     <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                         <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
                                     </div>
@@ -137,7 +150,7 @@ const SideBar = () => {
                                     onMouseLeave={(e) => e.target.classList.remove("in")}
                                     aria-label={index.toString()}
                                     onClick={handleClickNote}>
-                                    <li key={index} id={`note${index.toString()}`}>{item}</li>
+                                    <li key={index} id={`note${index.toString()}`}>{item.title}</li>
                                     <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                         <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
                                     </div>
@@ -146,7 +159,7 @@ const SideBar = () => {
                         }
 
                     })
-                }
+                ) : null}
                 <div className="sidebar__context__menu" id="submenu">
                     <div className="sidebar__menu hidden" >
                         <ul className="sidebar__menu__list">

@@ -1,28 +1,37 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getAllUsers } from '../../api/user;
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import userAPI from '../../api/user';
 
-const initialState = await getAllUsers();
+const initialState = {
+	loading: false,
+	users: [],
+	error: '',
+}
+
+
+const fetchUsers = createAsyncThunk('user/fetchUsers', () => {
+	// the inside "thunk function"
+	return userAPI.getAllUsers();
+})
 
 const userSlice = createSlice({
-    name: 'users',
-    initialState,
-    reducers: {
-		addUser(state, action) {
-			state.push({
-				username: action.payload.username,
-				password: action.payload.password
-			})
-		},
-		deleteUser(state, action) {
-			state.filter((u) => {
-				u.id !== action.payload
-			})
-		},
-		getUser(state, action) {
-			state.find(u => u.id === action.payload)
-		}
-	}
+	name: 'users',
+	initialState,
+	reducers: {},
+	extraReducers: (builder) => {
+		builder.addCase(fetchUsers.pending, (state) => {
+			state.loading = true;
+		});
+		builder.addCase(fetchUsers.fulfilled, (state, action) => {
+			state.loading = false;
+			state.users = action.payload;
+			state.error = '';
+		});
+		builder.addCase(fetchUsers.rejected, (state, action) => {
+			state.loading = false;
+			state.users = [];
+			state.error = action.error.message;
+		});
+	},
 });
 
-export const { addUser, deleteUser, getUser } = userSlice.actions
 export default userSlice.reducer;
