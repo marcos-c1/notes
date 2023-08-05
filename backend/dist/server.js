@@ -11,6 +11,7 @@ const userRoute_1 = __importDefault(require("./routes/api/userRoute"));
 const noteRoute_1 = __importDefault(require("./routes/api/noteRoute"));
 const authRoute_1 = __importDefault(require("./routes/api/authRoute"));
 const refreshRoute_1 = __importDefault(require("./routes/api/refreshRoute"));
+var cors = require('cors');
 const cookieParser = require("cookie-parser");
 dotenv_1.default.config();
 (0, db_1.default)();
@@ -20,6 +21,10 @@ const port = process.env.PORT;
 app.use(cookieParser());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
+// CORS
+app.use(cors({
+    origin: 'http://localhost:1420'
+}));
 // Routes
 app.use('/', userRoute_1.default);
 app.use('/', noteRoute_1.default);

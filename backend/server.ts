@@ -8,6 +8,8 @@ import noteRouter from './routes/api/noteRoute';
 import authRouter from './routes/api/authRoute';
 import refreshRouter from './routes/api/refreshRoute';
 
+var cors = require('cors');
+
 const cookieParser = require("cookie-parser");
 
 dotenv.config();
@@ -20,6 +22,11 @@ const port = process.env.PORT;
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+// CORS
+app.use(cors({
+    origin: 'http://localhost:1420'
+}));
 
 
 // Routes
