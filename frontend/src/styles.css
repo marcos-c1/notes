@@ -174,8 +174,8 @@ li {
 .container__sidebar {
   position: block;
   border-right: 0.1cqmin solid rgb(63, 63, 63);
-  width: 25%;
-  max-height: calc(100vh - 77px);
+  width: 100%;
+  max-height: 100vh;
   justify-items: center;
   -webkit-user-select: none;
 }
@@ -205,6 +205,7 @@ li {
   flex-direction: column;
   align-items: baseline;
   -webkit-user-select: none;
+  width: 25%;
 }
 
 .sidebar__note {
@@ -237,14 +238,14 @@ li {
 }
 
 .container__editor {
-  padding-top: 1px;
   width: 75%;
+  padding-top: 1px;
   min-height: max-content;
 }
 
 .editor {
   font-family: 'Poppins', sans-serif;
-  min-height: calc(100vh - 75px);
+  min-height: calc(100vh - 80px);
   overflow-y: hidden;
 }
 
@@ -270,6 +271,7 @@ li {
 .sidebar__searchbar {
   display: flex;
   flex-direction: row;
+  width: 100%;
   box-shadow: 0px 0.1cqmin 0px 0px rgb(63, 63, 63);
 }
 
@@ -279,18 +281,24 @@ li {
 
 @media (min-width: 1280px) {}
 
-#searchbar,
 #username,
 #password {
-  width: 68%;
   padding: 0;
-  font-size: 1em;
+  font-size: 0.9em;
   font-weight: 500;
   margin-left: 20px;
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   margin-right: 10px;
   padding-left: 5px;
+}
+
+#searchbar {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 #username,
@@ -303,10 +311,13 @@ li {
   align-self: center;
 }
 
+#filterBtn {
+  margin-right: 10px;
+}
 
 #addBtn {
   margin-left: 5px;
-  margin-right: 10px;
+  margin-right: 20px;
   background-color: rgba(255, 255, 255, 0.171);
   border-radius: 5px;
   z-index: -1;

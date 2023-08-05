@@ -3,7 +3,6 @@ import reactLogo from "./assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 import Menu from "./components/Menu"
-import SideBar from "./components/SideBar";
 import Content from "./components/Content";
 import { CiMenuBurger } from "react-icons/ci";
 
@@ -33,10 +32,7 @@ function App() {
         <NotesContext.Provider value={[notes, setNotes]}>
           <main className="">
             <Menu isLogin={login} />
-            <div className="main__content" id="main">
-              <SideBar />
-              <Content />
-            </div>
+            <Content />
           </main>
         </NotesContext.Provider>
       </ThemeContext.Provider>
