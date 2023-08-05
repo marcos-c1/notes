@@ -416,3 +416,9 @@ li {
   margin-right: 5px;
   stroke: var(--color-text-primary-offset);
 }
+
+.sidebar__loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

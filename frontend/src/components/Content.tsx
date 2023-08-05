@@ -3,16 +3,18 @@ import { BsSearch, BsTrash, BsDownload } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
 import { CiMenuKebab } from "react-icons/ci";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
-import { NotesContext } from "./contexts/Notes";
+import { SelectedContext } from "./contexts/SelectedNote";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNotes } from "../redux/notes/noteSlice";
+import { fetchNotes, addNewNote, deleteNoteById } from "../redux/notes/noteSlice";
 import user from "../api/user";
 import Editor from "./Editor";
 
+import { ContentContext } from "./contexts/Content";
+
 const Content = () => {
     const submenu = document.querySelector(".sidebar__menu");
-    const [notes, setNotes] = useContext(NotesContext);
-    const [selectedNote, setSelectedNote] = useState(0);
+    const [selectedNote, setSelectedNote] = useContext(SelectedContext);
+    const [content, setContent] = useContext(ContentContext);
     const [newNoteName, setNewNoteName] = useState(null);
 
     const dispatch = useDispatch();
@@ -47,10 +49,14 @@ const Content = () => {
         }
     }
 
-    function addNote() {
-        let size = notes.length + 1;
-        setNotes([...notes, `Note ${size.toString()}`])
-        dispatch(addNote(notes))
+    async function addNote() {
+        let size = note.notes.length + 1;
+        let newNote = {
+            title: `Note ${size.toString()}`,
+            content: ''
+        }
+        //setNotes([...notes,])
+        await dispatch(addNewNote(newNote)).unwrap();
     }
 
     function handleClickNote(e) {
@@ -59,6 +65,7 @@ const Content = () => {
         let classList = element.classList;
 
         setSelectedNote(element.ariaLabel);
+        setContent(note.notes[element.ariaLabel].content);
 
         for (let i = 0; i < notes.length; i++) {
             if (notes[i].ariaLabel == element.ariaLabel) {
@@ -95,8 +102,9 @@ const Content = () => {
 
     function deleteNote() {
         if (selectedNote != undefined || selectedNote != null) {
-            const newNotes = notes.filter((_, index) => index != selectedNote)
-            setNotes(newNotes)
+            const index = selectedNote;
+            setSelectedNote(index - 1);
+            dispatch(deleteNoteById(note.notes[index]._id)).unwrap();
         }
         hideSubmenu()
     }
@@ -130,7 +138,7 @@ const Content = () => {
                             <span className="icon icon__mode" id="addBtn" onClick={addNote}><IoAddOutline /></span>
                         </div>
                     </div>
-                    {note.loading && <div>Loading...</div>}
+                    {note.loading && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Loading...</h2></div>}
                     {!note.loading && note.error ? <div>Error.. {note.error}</div> : null}
                     {!note.loading && note.notes.length ? (
                         note.notes.map((item: Object, index: number) => {
@@ -178,7 +186,9 @@ const Content = () => {
                 {!note.loading && note.error ? <div>Error.. {note.error}</div> : null}
                 {!note.loading && note.notes.length ? (
                     <div className="container__editor">
-                        <Editor content={note.notes[selectedNote].content} />
+                        <ContentContext.Provider value={[content, setContent]}>
+                            <Editor content={note.notes[selectedNote].content || ''} />
+                        </ContentContext.Provider>
                     </div>
                 ) : null}
             </div>

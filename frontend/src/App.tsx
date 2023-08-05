@@ -8,18 +8,21 @@ import { CiMenuBurger } from "react-icons/ci";
 
 import { ThemeContext } from "./components/contexts/Theme";
 import { LoginContext } from "./components/contexts/Login";
-import { NotesContext } from "./components/contexts/Notes";
+import { SelectedContext } from "./components/contexts/SelectedNote";
+import { ContentContext } from "./components/contexts/Content";
 
 function App() {
   const defaultColorScheme = useContext(ThemeContext);
-  const defaultNotes = useContext(NotesContext);
+  const defaultNotes = useContext(SelectedContext);
   const defaultLogin = useContext(LoginContext);
+  const defaultContent = useContext(ContentContext);
 
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
   const [login, setLogin] = useState(false);
   const [colorScheme, setColorScheme] = useState("dark");
-  const [notes, setNotes] = useState(["Notes 1", "Notes 2", "Notes 3", "Notes 4", "Notes 5"]);
+  const [selectedNote, setSelectedNote] = useState(defaultNotes);
+  const [content, setContent] = useState(defaultContent);
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -29,12 +32,14 @@ function App() {
   return (
     <LoginContext.Provider value={[login, setLogin]}>
       <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
-        <NotesContext.Provider value={[notes, setNotes]}>
-          <main className="">
-            <Menu isLogin={login} />
-            <Content />
-          </main>
-        </NotesContext.Provider>
+        <SelectedContext.Provider value={[selectedNote, setSelectedNote]}>
+          <ContentContext.Provider value={[content, setContent]}>
+            <main className="">
+              <Menu isLogin={login} />
+              <Content />
+            </main>
+          </ContentContext.Provider>
+        </SelectedContext.Provider>
       </ThemeContext.Provider>
     </LoginContext.Provider >
   );
