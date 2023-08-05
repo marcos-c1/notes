@@ -13,17 +13,20 @@ import { ContentContext } from "./contexts/Content";
 
 const Content = () => {
     const submenu = document.querySelector(".sidebar__menu");
+
     const [selectedNote, setSelectedNote] = useContext(SelectedContext);
     const [content, setContent] = useContext(ContentContext);
     const [newNoteName, setNewNoteName] = useState(null);
 
     const dispatch = useDispatch();
     const note = useSelector((state) => state.notes);
-    const noteStatus = useSelector(state => state.loading);
+    const noteStatus = useSelector(state => state.notes.loading);
+    const hasError = useSelector(state => state.notes.error);
+    const initialContent = useSelector(state => state.notes.content);
 
     useEffect(() => {
         dispatch(fetchNotes());
-    }, []);
+    }, [dispatch]);
 
     document.addEventListener('click', (e: Event) => {
         if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
@@ -38,8 +41,7 @@ const Content = () => {
     function searchNote(e) {
         let value = e.target.value.toLowerCase().trim()
         if (value) {
-            let filter = allNotes.filter((note) => note.toLowerCase().includes(value))
-            console.log(allNotes)
+            let filter = note.notes.filter((note) => note.toLowerCase().includes(value))
             if (filter.length > 0)
                 setNotes(filter)
             else
@@ -183,15 +185,17 @@ const Content = () => {
                     </div>
                 </ul>
                 {note.loading && <div>Loading...</div>}
-                {!note.loading && note.error ? <div>Error.. {note.error}</div> : null}
-                {!note.loading && note.notes.length ? (
-                    <div className="container__editor">
-                        <ContentContext.Provider value={[content, setContent]}>
-                            <Editor content={note.notes[selectedNote].content || ''} />
-                        </ContentContext.Provider>
-                    </div>
-                ) : null}
-            </div>
+                {!note.loading && note.error ? <div> Error.. {note.error}</div> : null}
+                {
+                    !note.loading && note.notes.length ? (
+                        <div className="container__editor">
+                            <ContentContext.Provider value={[content, setContent]}>
+                                <Editor />
+                            </ContentContext.Provider>
+                        </div>
+                    ) : null
+                }
+            </div >
         </div >
     )
 }

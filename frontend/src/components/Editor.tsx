@@ -12,9 +12,22 @@ const Editor = ({ content }) => {
     const dispatch = useDispatch();
     const note = useSelector((state) => state.notes);
 
+    var typingTimer;                // timer identifier
+    var doneTypingInterval = 5000;  // time in ms (5 seconds)
+
     function changeText(e) {
         setText(e.target.value || "");
         //await dispatch()
+    }
+
+    function checkTyping(e) {
+        if (e.target.value) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    }
+
+    function doneTyping() {
+        console.log(text);
     }
 
     return (
@@ -25,6 +38,7 @@ const Editor = ({ content }) => {
                 value={text}
                 preview="edit"
                 onChange={(val?: string) => setText(val || "")}
+                onKeyUp={checkTyping}
                 previewOptions={{
                     rehypePlugins: [[rehypeSanitize]],
                 }}
