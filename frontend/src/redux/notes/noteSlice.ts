@@ -63,7 +63,6 @@ const noteSlice = createSlice({
         });
         builder.addCase(updateNoteById.fulfilled, (state, action) => {
             state.loading = false;
-            console.log(action.payload);
             state.notes = state.notes.map((n) => {
                 if (action.payload._id == n._id) {
                     return { ...n, title: action.payload.title, content: action.payload.content };

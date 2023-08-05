@@ -422,3 +422,15 @@ li {
   top: 50%;
   left: 50%;
 }
+
+.save__icon {
+	display: flex;
+	margin-left: 10px;
+	padding: 3px;
+	font: inherit;
+	justify-items: center;
+	font-weight: bold;
+	background-color: rgba(255, 255, 255, 0.171);
+	border-radius: 5px;
+	z-index: -1;
+}

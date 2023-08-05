@@ -189,13 +189,13 @@ const Content = () => {
                         </div>
                     </div>
                 </ul>
-                {note.loading && <div>Loading...</div>}
+                {note.loading && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Loading...</h2></div>}
                 {!note.loading && note.error ? <div> Error.. {note.error}</div> : null}
                 {
                     !note.loading && note.notes.length ? (
                         <div className="container__editor">
                             <ContentContext.Provider value={[content, setContent]}>
-                                <Editor />
+                                <Editor selectedNote={selectedNote} />
                             </ContentContext.Provider>
                         </div>
                     ) : null
