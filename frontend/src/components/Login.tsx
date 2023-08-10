@@ -26,25 +26,13 @@ const Login = () => {
 
     return (
         <div className="container__login white_font" id="login">
-            <div className="container__login" id="login">
-                <h3 style={{ textAlign: "center", marginBottom: "15px", overflow: "hidden" }}>Log in</h3>
-                <form action="" onSubmit={handleSubmit} method="post">
-                    <input type="text" placeholder="Username" id="username"></input>
-                    <input type="password" placeholder="Password" id="password"></input>
-                    <button style={{ display: "none" }}></button>
-                </form>
-                <small><Link to="/signup">Doesn't have an account?</Link></small>
-                <ul className="login__link">
-                    <small>Or sign with </small>
-                    <li className="flex__column">
-                        <SiGmail size={25} /><span>gmail</span>
-                    </li>
-                    <li className="flex__column">
-                        <VscGithub size={25} />
-                        <span>github</span>
-                    </li>
-                </ul>
-            </div>
+            <h3 style={{ textAlign: "center", marginBottom: "15px", overflow: "hidden" }}>Login</h3>
+            <form action="" onSubmit={handleSubmit} method="post">
+                <input type="text" placeholder="Username" id="username"></input>
+                <input type="password" placeholder="Password" id="password"></input>
+                <button id="btnLogin">Enter</button>
+            </form>
+            <small id="signUp" style={{ marginTop: "1em", marginLeft: "1em" }}><Link to="/signup" style={{ textDecoration: "none", font: "inherit", fontSize: "1em", color: "#f7f7f7" }}>Doesn't have an account?</Link></small>
         </div>
     )
 }

@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&family=Roboto:wght@500&family=Vina+Sans&display=swap');
 
 :root {
   font-family: 'Poppins', sans-serif;
@@ -25,6 +26,13 @@
   color: var(--font-color-dark-mode);
   background-color: var(--bg-primary-dark-mode);
 }
+
+#title {
+  font-family: 'Vina Sans', cursive;
+  font-size: 1.5em;
+  color: #8ab4f8;
+}
+
 
 * {
   margin: 0;
@@ -69,20 +77,20 @@ button {
 
 .container__menu {
   box-shadow: 0.1cqmin 0.1cqmin 0.1cqmin 0.1cqmin rgb(63, 63, 63);
-  padding: 20px 10px;
   -webkit-user-select: none;
 }
 
 .container__menu>ul {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   padding: 0px;
   max-height: 50px;
 }
 
 .container__menu__right {
   display: flex;
+  position: fixed;
+  right: 0;
   flex-direction: row;
   -webkit-user-select: none;
 }
@@ -103,10 +111,37 @@ button {
   height: 250px;
   top: 25%;
   left: 40%;
-  background-color: hsla(200, 100%, 0%, .4);
+  background-color: rgb(0, 0, 0);
   border-radius: 10px;
   padding: 2em;
-  z-index: 1;
+  z-index: 2;
+}
+
+#btnLogin {
+  padding: 0.5em;
+  border-radius: 10px;
+  font: inherit;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 1em;
+  overflow-y: hidden;
+  background: #1d1f2b;
+  justify-content: center;
+  color: white;
+
+}
+
+#btnLogin:hover {
+  background-color: white;
+  color: black;
+  transition: 0.5s all ease;
+  cursor: pointer;
+}
+
+#signUp:hover {
+  color: #1d1f2b;
+  text-decoration: underline;
+  transition: 0.8s all ease-in-out;
 }
 
 .container__login>form {
@@ -245,7 +280,7 @@ li {
 
 .editor {
   font-family: 'Poppins', sans-serif;
-  min-height: calc(100vh - 73px);
+  min-height: calc(100vh - 91px);
   overflow-y: hidden;
   width: 100%;
 }
@@ -282,13 +317,11 @@ li {
 
 #username,
 #password {
-  padding: 0;
+  padding: 0.5em;
   font-size: 0.9em;
   font-weight: 500;
-  margin-left: 20px;
   margin-top: 10px;
   margin-bottom: 5px;
-  margin-right: 10px;
   padding-left: 5px;
 }
 
@@ -298,12 +331,6 @@ li {
   margin-bottom: 10px;
   margin-left: 20px;
   margin-right: 10px;
-}
-
-#username,
-#password {
-  width: inherit;
-  margin-left: 0px !important;
 }
 
 .searchbar__filter {

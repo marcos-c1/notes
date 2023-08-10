@@ -3,7 +3,7 @@ import { RxTextAlignJustify } from "react-icons/rx";
 import { MdDarkMode } from "react-icons/md";
 import { useContext, useState } from "react";
 import { MdOutlineLightMode, MdClose } from "react-icons/md";
-
+import logo from '../img/logo_2.png'
 import { ThemeContext } from "./contexts/Theme";
 
 import Login from "./Login";
@@ -74,12 +74,12 @@ const Menu = ({ isLogin }) => {
         <div className="container__menu theme">
             <div id="blur" style={{ display: "none" }} onClick={handleHideBlur}>
             </div>
-            <ul style={{ alignItems: "center" }}>
+            <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
                 <li className="icon" onClick={hideMenu}>
                     <RxTextAlignJustify size={25} id="menu" />
                     <MdClose size={25} style={{ display: "none" }} id="close" />
                 </li>
-                <li>Notes</li>
+                <li style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
                 <ul className="container__menu__right" >
                     <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
                         <ThemeContext.Provider value={colorScheme}>
@@ -94,7 +94,7 @@ const Menu = ({ isLogin }) => {
                     login ? loginModal() : null
                 }
             </ul>
-        </div>
+        </div >
     )
 }
 
