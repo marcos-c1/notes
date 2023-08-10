@@ -245,7 +245,7 @@ li {
 
 .editor {
   font-family: 'Poppins', sans-serif;
-  min-height: calc(100vh - 80px);
+  min-height: calc(100vh - 73px);
   overflow-y: hidden;
   width: 100%;
 }

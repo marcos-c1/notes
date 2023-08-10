@@ -1,19 +1,33 @@
 import { BsSearch } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useContext } from "react";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { BsTrash, BsDownload } from "react-icons/bs";
 import { SelectedContext } from "./contexts/SelectedNote";
 import { CiMenuKebab } from "react-icons/ci";
 import { ContentContext } from "./contexts/Content";
+import { addNewNote, deleteNoteById, updateNoteById } from "../redux/notes/noteSlice";
+import { AsyncThunkAction } from "@reduxjs/toolkit";
 
 const Sidebar = () => {
-
+    const submenu = document.querySelector(".sidebar__menu");
+    const dispatch = useDispatch();
     const [selectedNote, setSelectedNote] = useContext(SelectedContext);
     const [content, setContent] = useContext(ContentContext);
 
     const note = useSelector((state) => state.notes);
+
+    document.addEventListener('click', (e: Event) => {
+        if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
+            hideSubmenu();
+        }
+    });
+
+    function hideSubmenu() {
+        submenu?.classList.add("hidden");
+    }
+
 
     function searchNote(e) {
         let value = e.target.value.toLowerCase().trim()
@@ -89,7 +103,7 @@ const Sidebar = () => {
         if (submenu?.classList.contains("hidden")) {
             submenu.classList.remove("hidden");
         } else {
-            submenu.classList.add("hidden");
+            submenu?.classList.add("hidden");
         }
     }
 
@@ -133,7 +147,7 @@ const Sidebar = () => {
                                         onMouseOver={(e) => e.target.classList.add("in")}
                                         onMouseLeave={(e) => e.target.classList.remove("in")}
                                         aria-label={index.toString()}
-                                        onClick={handleClickNote}>
+                                        onClick={handleClickNote} key={index}>
                                         <li key={index} id={`note${index.toString()}`}>{item.title}</li>
                                         <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                             <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
@@ -146,7 +160,7 @@ const Sidebar = () => {
                                         onMouseOver={(e) => e.target.classList.add("in")}
                                         onMouseLeave={(e) => e.target.classList.remove("in")}
                                         aria-label={index.toString()}
-                                        onClick={handleClickNote}>
+                                        onClick={handleClickNote} key={index}>
                                         <li key={index} id={`note${index.toString()}`}>{item.title}</li>
                                         <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                             <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
@@ -172,4 +186,4 @@ const Sidebar = () => {
     )
 }
 
-export default Sidebar
+export default Sidebar;

@@ -11,7 +11,6 @@ import { ContentContext } from "./contexts/Content";
 import { LoginContext } from "./contexts/Login";
 
 const Content = () => {
-    const submenu = document.querySelector(".sidebar__menu");
 
     const [selectedNote, setSelectedNote] = useContext(SelectedContext);
     const [content, setContent] = useContext(ContentContext);
@@ -26,16 +25,6 @@ const Content = () => {
     useEffect(() => {
         dispatch(fetchNotes());
     }, [dispatch]);
-
-    document.addEventListener('click', (e: Event) => {
-        if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
-            hideSubmenu();
-        }
-    });
-
-    function hideSubmenu() {
-        submenu?.classList.add("hidden");
-    }
 
     return (
         <>
