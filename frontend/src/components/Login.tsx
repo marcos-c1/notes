@@ -2,7 +2,7 @@ import { VscGithub } from "react-icons/vsc";
 import { SiGmail } from "react-icons/si";
 import { useState, useContext } from "react";
 import { ThemeContext } from "../components/contexts/Theme.tsx"
-
+import logo from "../img/logo_2.png"
 import {
     BrowserRouter as Router,
     Link
@@ -26,7 +26,7 @@ const Login = () => {
 
     return (
         <div className="container__login white_font" id="login">
-            <h3 style={{ textAlign: "center", marginBottom: "15px", overflow: "hidden" }}>Login</h3>
+            <img style={{ alignSelf: "center", overflow: "hidden" }} src={logo} width="70px" alt="Hey, I'm Marta!" /><span style={{textAlign: "center", marginBottom: "0.5em"}} id="title">Notes</span>
             <form action="" onSubmit={handleSubmit} method="post">
                 <input type="text" placeholder="Username" id="username"></input>
                 <input type="password" placeholder="Password" id="password"></input>

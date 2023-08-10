@@ -108,12 +108,13 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 250px;
+  height: 350px;
+  width: 300px;
   top: 25%;
   left: 40%;
   background-color: rgb(0, 0, 0);
   border-radius: 10px;
-  padding: 2em;
+  padding: 1.5em;
   z-index: 2;
 }
 
@@ -208,6 +209,7 @@ li {
 
 .container__sidebar {
   position: block;
+  width: 30%;
   border-right: 0.1cqmin solid rgb(63, 63, 63);
   max-height: 100vh;
   justify-items: center;
@@ -235,6 +237,7 @@ li {
 .sidebar__notes {
   margin: 0;
   padding: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: baseline;
@@ -475,4 +478,58 @@ li {
   display: flex;
   flex-direction: row;
   box-shadow: 0px 0px 0.1cqmin 0px rgb(63, 63, 63);
+}
+
+#signup__form {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  height: 500px;
+  color: black;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 10vh auto;
+  margin-right: 50vh;
+  margin-left: 50vh;
+}
+
+#signup__input {
+  padding: 1em;
+  border-radius: 0;
+  box-shadow: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#signup__check {
+  margin: 1em;
+}
+
+#btnSignUp {
+  padding: 1em;
+  border-radius: 10px;
+  font: inherit;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  overflow-y: hidden;
+  background: #1d1f2b;
+  justify-content: center;
+  color: white;
+}
+
+#btnGoBack {
+  padding: 0.5em;
+  border-radius: 10px;
+  font: inherit;
+  margin: 1em;
+  overflow-y: hidden;
+  background: #1d1f2b;
+  justify-content: center;
+  color: white;
+}
+
+#btnGoBack:hover {
+  padding: 1em;
+  transition: 0.5s all ease-in-out;
 }
