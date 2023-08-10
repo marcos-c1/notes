@@ -68,7 +68,7 @@ button {
 }
 
 .container__menu {
-  box-shadow: 0px 0px 0px 0.1cqmin rgb(63, 63, 63);
+  box-shadow: 0.1cqmin 0.1cqmin 0.1cqmin 0.1cqmin rgb(63, 63, 63);
   padding: 20px 10px;
   -webkit-user-select: none;
 }
@@ -174,7 +174,6 @@ li {
 .container__sidebar {
   position: block;
   border-right: 0.1cqmin solid rgb(63, 63, 63);
-  width: 100%;
   max-height: 100vh;
   justify-items: center;
   -webkit-user-select: none;
@@ -204,8 +203,8 @@ li {
   display: flex;
   flex-direction: column;
   align-items: baseline;
+  box-shadow: 0px 0.1cqmin 0px 0px rgb(63, 63, 63);
   -webkit-user-select: none;
-  width: 25%;
 }
 
 .sidebar__note {
@@ -232,14 +231,15 @@ li {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.main__content {
+.main__notes {
   display: flex;
+  box-shadow: 0.1cqmin 0px 0px 0px rgb(63, 63, 63);
   flex-direction: row;
+  width: 100%;
 }
 
 .container__editor {
-  width: 75%;
-  padding-top: 1px;
+  width: 100%;
   min-height: max-content;
 }
 
@@ -247,6 +247,7 @@ li {
   font-family: 'Poppins', sans-serif;
   min-height: calc(100vh - 80px);
   overflow-y: hidden;
+  width: 100%;
 }
 
 #btnTheme {
@@ -272,14 +273,12 @@ li {
   display: flex;
   flex-direction: row;
   width: 100%;
-  box-shadow: 0px 0.1cqmin 0px 0px rgb(63, 63, 63);
+  border-bottom: 0.1cqmin solid rgb(63, 63, 63);
 }
 
 .w-md-editor-toolbar {
   overflow-y: hidden;
 }
-
-@media (min-width: 1280px) {}
 
 #username,
 #password {
@@ -312,12 +311,12 @@ li {
 }
 
 #filterBtn {
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 #addBtn {
   margin-left: 5px;
-  margin-right: 20px;
+  margin-right: 30px;
   background-color: rgba(255, 255, 255, 0.171);
   border-radius: 5px;
   z-index: -1;
@@ -423,14 +422,30 @@ li {
   left: 50%;
 }
 
+.white_font {
+  color: #fff;
+}
+
 .save__icon {
-	display: flex;
-	margin-left: 10px;
-	padding: 3px;
-	font: inherit;
-	justify-items: center;
-	font-weight: bold;
-	background-color: rgba(255, 255, 255, 0.171);
-	border-radius: 5px;
-	z-index: -1;
+  display: flex;
+  margin-left: 10px;
+  padding: 3px;
+  font: inherit;
+  justify-items: center;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.171);
+  border-radius: 5px;
+  z-index: -1;
+}
+
+
+.create__account:hover {
+  color: aquamarine;
+}
+
+.container__main {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0px 0px 0.1cqmin 0px rgb(63, 63, 63);
 }

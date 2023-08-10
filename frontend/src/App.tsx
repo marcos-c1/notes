@@ -1,15 +1,12 @@
 import { useContext, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
-import Menu from "./components/Menu"
 import Content from "./components/Content";
-import { CiMenuBurger } from "react-icons/ci";
-
+import SignUp from "./pages/SignUp";
 import { ThemeContext } from "./components/contexts/Theme";
 import { LoginContext } from "./components/contexts/Login";
 import { SelectedContext } from "./components/contexts/SelectedNote";
 import { ContentContext } from "./components/contexts/Content";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const defaultColorScheme = useContext(ThemeContext);
@@ -24,24 +21,23 @@ function App() {
   const [selectedNote, setSelectedNote] = useState(defaultNotes);
   const [content, setContent] = useState(defaultContent);
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
-
   return (
-    <LoginContext.Provider value={[login, setLogin]}>
-      <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
-        <SelectedContext.Provider value={[selectedNote, setSelectedNote]}>
-          <ContentContext.Provider value={[content, setContent]}>
-            <main className="">
-              <Menu isLogin={login} />
-              <Content />
-            </main>
-          </ContentContext.Provider>
-        </SelectedContext.Provider>
-      </ThemeContext.Provider>
-    </LoginContext.Provider >
+    <Router>
+      <LoginContext.Provider value={[login, setLogin]}>
+        <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
+          <SelectedContext.Provider value={[selectedNote, setSelectedNote]}>
+            <ContentContext.Provider value={[content, setContent]}>
+              <main className="App">
+                <Routes>
+                  <Route path="/" Component={Content} />
+                  <Route path="/signup" Component={SignUp} />
+                </Routes>
+              </main>
+            </ContentContext.Provider>
+          </SelectedContext.Provider>
+        </ThemeContext.Provider>
+      </LoginContext.Provider >
+    </Router>
   );
 }
 
