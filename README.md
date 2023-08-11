@@ -1,6 +1,3 @@
-## Note app
-
-wip
 ![Python](https://img.shields.io/badge/-ReactJs-61DAFB?logo=react&logoColor=white&style=for-the-badge)
 ![Dependencies](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)
 ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
@@ -17,7 +14,7 @@ An dekstop and web application made with Tauri, NodeJS and TypeScript, with a lo
 
 * Marcos Bezerra Campos 
 * **Email:** marcos.b.campos14@gmail.com
-* **Linkedin:** https://www.linkedin.com/in/marcos-bezerra-campos-981927196/
+* **Linkedin:**  
 ## Dependencies
 
 - @reduxjs/toolkit: ^1.9.5,
