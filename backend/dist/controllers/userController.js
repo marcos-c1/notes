@@ -30,17 +30,19 @@ const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { username, password } = req.body;
+    const { fullname, username, email, password } = req.body;
     const alreadyHasUser = yield User.findOne({ username: username }).exec();
     if (alreadyHasUser)
         return res.status(409).json({ 'message': 'User already registred' });
     try {
         const hashedPwd = yield bcrypt.hash(password, 10);
         const result = yield User.create({
+            "fullname": fullname,
+            "email": email,
             "username": username,
             "password": hashedPwd
         });
-        res.status(200).json({ 'message': `New user ${user} created!` });
+        res.status(200).json({ 'message': `New user ${username} created!` });
     }
     catch (error) {
         res.status(500).json({ 'message': `User not created: ${error.message}` });

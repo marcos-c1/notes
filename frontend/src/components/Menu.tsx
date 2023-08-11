@@ -15,21 +15,43 @@ const Menu = ({ isLogin }) => {
     const iconSize = 20;
 
     function hideMenu(e) {
-        const menu = document.getElementById("menu");
-        const close = document.getElementById("close");
         const sidebar = document.getElementById("sidebar");
-        const containerEditor = document.getElementById("containerEditor");
+        const containerEditor = document.getElementById("container__editor");
 
-        if (menu?.style.display != "none") {
+        if (containerEditor.style.display == "none") {
             sidebar.style.display = "none";
             containerEditor.style.width = "100%";
-            menu.style.display = "none";
-            close.style.display = "block";
+            containerEditor.style.display = "block";
         } else {
-            sidebar.style.display = "block";
-            containerEditor.style.width = "";
-            menu.style.display = "block";
-            close.style.display = "none";
+            if (window.screen.width <= 700) {
+                if (sidebar.style.display == "none") {
+                    console.log('to aqui')
+                    sidebar.style.display = "block";
+                    sidebar.style.width = "100%";
+                    sidebar.style.minHeight = "calc(100vh - 91px)";
+                    containerEditor.style.display = "none";
+                    containerEditor.style.width = "";
+                } else {
+                    sidebar.style.display = "none";
+                    sidebar.style.width = "";
+                    containerEditor.style.display = "block";
+                    containerEditor.style.width = "100%";
+                    containerEditor.style.minHeight = "calc(100vh - 91px)";
+                }
+            } else {
+                if (sidebar?.style.display == "none") {
+                    sidebar.style.display = "block";
+                    sidebar.style.width = "";
+                    containerEditor.style.width = "";
+                } else {
+                    sidebar.style.display = "none";
+                    sidebar.style.width = "";
+                    containerEditor.style.width = "100%";
+                    containerEditor.style.display = "block";
+                    containerEditor.style.minHeight = "calc(100vh - 91px)";
+                }
+            }
+
         }
     }
 
@@ -77,9 +99,8 @@ const Menu = ({ isLogin }) => {
             <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
                 <li className="icon" onClick={hideMenu}>
                     <RxTextAlignJustify size={25} id="menu" />
-                    <MdClose size={25} style={{ display: "none" }} id="close" />
                 </li>
-                <li style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
+                <li id="logo" style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
                 <ul className="container__menu__right" >
                     <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
                         <ThemeContext.Provider value={colorScheme}>

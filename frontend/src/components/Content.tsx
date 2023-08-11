@@ -33,7 +33,7 @@ const Content = () => {
             </header>
             <main className="container__main">
                 <Sidebar />
-                <div className="container__editor">
+                <div className="container__editor" id="container__editor">
                     {note.loading && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Loading...</h2></div>}
                     {!note.loading && note.error ? <div> Error.. {note.error}</div> : null}
                     {

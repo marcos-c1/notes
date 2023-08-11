@@ -216,6 +216,50 @@ li {
   -webkit-user-select: none;
 }
 
+@media (max-width: 700px) {
+  .container__sidebar {
+    display: none;
+  }
+
+  .container__login {
+    left: 25%;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .container__login {
+    left: 15%;
+    height: 300px;
+    width: 250px;
+  }
+}
+
+@media (max-width: 400px) {
+
+  #signup__title {
+    font-size: 1em;
+  }
+
+  .container__login {
+    left: 10%;
+    height: 300px;
+    width: 220px;
+  }
+}
+
+@media (min-width: 700px) {
+  .container__sidebar {
+    display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  #logo {
+    display: none;
+  }
+}
+
 .container__sidebar::-webkit-scrollbar {
   width: 5px;
 }
@@ -480,25 +524,49 @@ li {
   box-shadow: 0px 0px 0.1cqmin 0px rgb(63, 63, 63);
 }
 
-#signup__form {
+.container__signup {
   display: flex;
   flex-direction: column;
   background: white;
+  margin-top: 5vh;
+  width: 600px;
   height: 500px;
+  padding: 20px;
+  margin-left: 10vh;
+  margin-right: 10vh;
+  height: 500px;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
   color: black;
   border-radius: 10px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  overflow-y: hidden;
+}
+
+.container__centering {
+  display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: center;
-  margin: 10vh auto;
-  margin-right: 50vh;
-  margin-left: 50vh;
+}
+
+#signup__form {
+  overflow-y: hidden;
 }
 
 #signup__input {
   padding: 1em;
+  width: 100%;
   border-radius: 0;
   box-shadow: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  overflow-y: hidden;
+}
+
+#signup__title {
+  font-family: 'Vina Sans', cursive;
+  font-size: 3em;
+  color: #8ab4f8;
 }
 
 #signup__check {
