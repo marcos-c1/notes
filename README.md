@@ -14,7 +14,7 @@ An dekstop and web application made with Tauri, NodeJS and TypeScript, with a lo
 
 * Marcos Bezerra Campos 
 * **Email:** marcos.b.campos14@gmail.com
-* **Linkedin:**  
+
 ## Dependencies
 
 - @reduxjs/toolkit: ^1.9.5,
