@@ -1,18 +1,25 @@
 
 import { RxTextAlignJustify } from "react-icons/rx";
 import { MdDarkMode } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MdOutlineLightMode, MdClose } from "react-icons/md";
 import logo from '../img/logo_2.png'
 import { ThemeContext } from "./contexts/Theme";
-
+import { refreshToken } from '../redux/notes/userSlice';
 import Login from "./Login";
+import { useDispatch, useSelector } from "react-redux";
+import { LoginContext } from "./contexts/Login";
 
-const Menu = ({ isLogin }) => {
-    const [login, setLogin] = useState(isLogin);
+const Menu = () => {
+    const dispatch = useDispatch();
     const [colorScheme, setColorScheme] = useContext(ThemeContext);
-
+    const [login, setLogin] = useContext(LoginContext);
+    const user = useSelector((state) => state.user);
     const iconSize = 20;
+
+    useEffect(() => {
+        dispatch(refreshToken()).unwrap();
+    }, [dispatch])
 
     function hideMenu(e) {
         const sidebar = document.getElementById("sidebar");
@@ -25,7 +32,6 @@ const Menu = ({ isLogin }) => {
         } else {
             if (window.screen.width <= 700) {
                 if (sidebar.style.display == "none") {
-                    console.log('to aqui')
                     sidebar.style.display = "block";
                     sidebar.style.width = "100%";
                     sidebar.style.minHeight = "calc(100vh - 91px)";
@@ -84,38 +90,42 @@ const Menu = ({ isLogin }) => {
     }
 
     function showLoginMenu() {
-        let element = document.getElementById("blur");
-        if (login) {
-            element.style.display = "block";
-        } else {
-            element.style.display = "none"
+        const element = document.getElementById("blur");
+        if (element) {
+            if (login) {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none"
+            }
         }
     }
 
     return (
-        <div className="container__menu theme">
-            <div id="blur" style={{ display: "none" }} onClick={handleHideBlur}>
-            </div>
-            <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
-                <li className="icon" onClick={hideMenu}>
-                    <RxTextAlignJustify size={25} id="menu" />
-                </li>
-                <li id="logo" style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
-                <ul className="container__menu__right" >
-                    <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
-                        <ThemeContext.Provider value={colorScheme}>
-                            {colorScheme == "dark" ?
-                                <MdOutlineLightMode id="light-mode" size={iconSize} /> :
-                                <MdDarkMode id="dark-mode" size={iconSize} />}
-                        </ThemeContext.Provider>
+        <LoginContext.Provider value={[login, setLogin]}>
+            <div className="container__menu theme">
+                {login ? <div id="blur" onClick={handleHideBlur}></div> : null}
+                <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
+                    <li className="icon" onClick={hideMenu}>
+                        <RxTextAlignJustify size={25} id="menu" />
                     </li>
-                    <li>{isLogin ? <img src="./logo.svg" alt="logo" /> : <button onClick={() => setLogin(!login)} className="menu__login">Login</button>}</li>
+                    <li id="logo" style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
+                    <ul className="container__menu__right" >
+                        <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
+                            <ThemeContext.Provider value={colorScheme}>
+                                {colorScheme == "dark" ?
+                                    <MdOutlineLightMode id="light-mode" size={iconSize} /> :
+                                    <MdDarkMode id="dark-mode" size={iconSize} />}
+                            </ThemeContext.Provider>
+                        </li>
+                        <li>{!user.loading && user.user.username ? <span className="menu__login">{user.user.username}</span> : <button onClick={() => setLogin(!login)} className="menu__login">Login</button>}</li>
+                    </ul>
+
+                    {
+                        login ? loginModal() : null
+                    }
                 </ul>
-                {
-                    login ? loginModal() : null
-                }
-            </ul>
-        </div >
+            </div >
+        </LoginContext.Provider>
     )
 }
 

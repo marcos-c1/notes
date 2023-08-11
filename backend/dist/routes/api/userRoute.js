@@ -5,6 +5,7 @@ const router = express.Router();
 const userController_1 = require("../../controllers/userController");
 router.get('/users/', userController_1.getUsers);
 router.get('/user/:id', userController_1.getUserById);
+router.get('/user', userController_1.findUserByToken);
 router.post('/user/register', userController_1.createUser);
 router.delete('/user/:id', userController_1.deleteUserById);
 module.exports = router;

@@ -28,7 +28,7 @@ const handlerAuth = async (req, res) => {
 
 		findUser.save().then((r) => console.log(`${r} salvo!`));
 
-		res.status(200).json({ accessToken });
+		res.status(200).json({ 'id': findUser._id, 'accessToken': accessToken });
 	} else {
 		res.status(401);
 	}

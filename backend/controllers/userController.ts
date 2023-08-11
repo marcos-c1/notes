@@ -24,19 +24,35 @@ const createUser = async (req, res) => {
     const { fullname, username, email, password } = req.body;
     const alreadyHasUser = await User.findOne({ username: username }).exec();
 
-    if (alreadyHasUser) return res.status(409).json({ 'message': 'User already registred' });
+    if (alreadyHasUser) res.status(409).json({ 'message': 'User already registred' });
+    else {
+        try {
+            const hashedPwd = await bcrypt.hash(password, 10);
+            const result = await User.create({
+                "fullname": fullname,
+                "email": email,
+                "username": username,
+                "password": hashedPwd
+            });
+            res.status(200).json({ 'message': `New user ${username} created!` });
+        } catch (error) {
+            res.status(500).json({ 'message': `User not created: ${error.message}` });
+        }
+    }
+}
 
-    try {
-        const hashedPwd = await bcrypt.hash(password, 10);
-        const result = await User.create({
-            "fullname": fullname,
-            "email": email,
-            "username": username,
-            "password": hashedPwd
-        });
-        res.status(200).json({ 'message': `New user ${username} created!` });
-    } catch (error) {
-        res.status(500).json({ 'message': `User not created: ${error.message}` });
+const findUserByToken = async (req, res) => {
+    const { token } = req.body;
+    console.log('Access Token: ' + token)
+    if (!token) res.status(403).json({ 'message': 'No token provided' });
+    else {
+        try {
+            const findUserByToken = await User.findOne({ refreshToken: token }).exec();
+            if (!findUserByToken) return res.sendStatus(403);
+            res.status(200).json(findUserByToken);
+        } catch (error) {
+            res.status(500).json({ 'message': `Server error ${error.message}` });
+        }
     }
 }
 
@@ -59,5 +75,6 @@ module.exports = {
     getUsers,
     getUserById,
     createUser,
-    deleteUserById
+    deleteUserById,
+    findUserByToken
 }

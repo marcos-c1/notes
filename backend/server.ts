@@ -25,7 +25,8 @@ app.use(express.json());
 
 // CORS
 app.use(cors({
-    origin: 'http://localhost:1420'
+    origin: 'http://localhost:1420',
+    credentials: true
 }));
 
 
@@ -35,7 +36,6 @@ app.use('/', noteRouter);
 app.use('/', authRouter);
 app.use('/', refreshRouter);
 
-app.use(verifyJWT);
 
 app.listen(port, () => {
     console.log(`[SERVER]: Server is running at http://localhost:${port}`);

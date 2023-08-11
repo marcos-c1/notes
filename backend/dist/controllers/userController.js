@@ -33,19 +33,38 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { fullname, username, email, password } = req.body;
     const alreadyHasUser = yield User.findOne({ username: username }).exec();
     if (alreadyHasUser)
-        return res.status(409).json({ 'message': 'User already registred' });
-    try {
-        const hashedPwd = yield bcrypt.hash(password, 10);
-        const result = yield User.create({
-            "fullname": fullname,
-            "email": email,
-            "username": username,
-            "password": hashedPwd
-        });
-        res.status(200).json({ 'message': `New user ${username} created!` });
+        res.status(409).json({ 'message': 'User already registred' });
+    else {
+        try {
+            const hashedPwd = yield bcrypt.hash(password, 10);
+            const result = yield User.create({
+                "fullname": fullname,
+                "email": email,
+                "username": username,
+                "password": hashedPwd
+            });
+            res.status(200).json({ 'message': `New user ${username} created!` });
+        }
+        catch (error) {
+            res.status(500).json({ 'message': `User not created: ${error.message}` });
+        }
     }
-    catch (error) {
-        res.status(500).json({ 'message': `User not created: ${error.message}` });
+});
+const findUserByToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { token } = req.body;
+    console.log('Access Token: ' + token);
+    if (!token)
+        res.status(403).json({ 'message': 'No token provided' });
+    else {
+        try {
+            const findUserByToken = yield User.findOne({ refreshToken: token }).exec();
+            if (!findUserByToken)
+                return res.sendStatus(403);
+            res.status(200).json(findUserByToken);
+        }
+        catch (error) {
+            res.status(500).json({ 'message': `Server error ${error.message}` });
+        }
     }
 });
 const deleteUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -65,5 +84,6 @@ module.exports = {
     getUsers,
     getUserById,
     createUser,
-    deleteUserById
+    deleteUserById,
+    findUserByToken
 };

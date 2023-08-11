@@ -25,7 +25,7 @@ const handlerAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         findUser.refreshToken = refreshToken;
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         findUser.save().then((r) => console.log(`${r} salvo!`));
-        res.status(200).json({ accessToken });
+        res.status(200).json({ 'id': findUser._id, 'accessToken': accessToken });
     }
     else {
         res.status(401);
