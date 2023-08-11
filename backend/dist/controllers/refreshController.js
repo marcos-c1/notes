@@ -20,18 +20,13 @@ const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const refreshToken = cookies.jwt;
         try {
             const findUserByToken = yield User.findOne({ refreshToken: refreshToken }).exec();
-            if (!findUserByToken) {
-                res.sendStatus(403).json({ 'message': 'User not found in refreshToken route' });
-            }
-            else {
-                // evaluate jwt
-                jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
-                    if (err || findUserByToken.username !== decoded.username)
-                        return res.sendStatus(403);
-                    const accessToken = jwt.sign({ "username": findUserByToken.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
-                    res.json({ 'username': findUserByToken.username, 'accessToken': accessToken });
-                });
-            }
+            // evaluate jwt
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+                if (err || findUserByToken.username !== decoded.username)
+                    return res.sendStatus(403);
+                const accessToken = jwt.sign({ "username": findUserByToken.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+                res.json({ 'username': findUserByToken.username, 'accessToken': accessToken });
+            });
         }
         catch (error) {
             res.status(500).json({ 'message': `Server error: ${error.message}` });
