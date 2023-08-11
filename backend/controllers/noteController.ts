@@ -36,18 +36,14 @@ const updateNote = async (req, res) => {
 	const { title, content } = req.body;
 	const id = req.params.id;
 
-	if (!title || !content) {
-		res.status(404).json({ 'message': `Body parameters missing` })
-	} else {
-		try {
-			const note = await Note.findById(id).exec();
-			note.title = title;
-			note.content = content;
-			const result = await note.save();
-			res.status(200).json(result);
-		} catch (error) {
-			res.status(500).json({ 'message': `Note not updated: ${error.message}` })
-		}
+	try {
+		const note = await Note.findById(id).exec();
+		note.title = title;
+		note.content = content;
+		const result = await note.save();
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(500).json({ 'message': `Note not updated: ${error.message}` })
 	}
 }
 

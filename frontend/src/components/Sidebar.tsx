@@ -86,6 +86,7 @@ const Sidebar = () => {
                 title: nodeNote.innerHTML,
                 content: note.notes[selectedNote].content
             }
+            console.log(newNote)
             await dispatch(updateNoteById(newNote)).unwrap();
             input.replaceWith(nodeNote);
         });

@@ -42,20 +42,15 @@ const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 const updateNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { title, content } = req.body;
     const id = req.params.id;
-    if (!title || !content) {
-        res.status(404).json({ 'message': `Body parameters missing` });
+    try {
+        const note = yield Note.findById(id).exec();
+        note.title = title;
+        note.content = content;
+        const result = yield note.save();
+        res.status(200).json(result);
     }
-    else {
-        try {
-            const note = yield Note.findById(id).exec();
-            note.title = title;
-            note.content = content;
-            const result = yield note.save();
-            res.status(200).json(result);
-        }
-        catch (error) {
-            res.status(500).json({ 'message': `Note not updated: ${error.message}` });
-        }
+    catch (error) {
+        res.status(500).json({ 'message': `Note not updated: ${error.message}` });
     }
 });
 const deleteNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
