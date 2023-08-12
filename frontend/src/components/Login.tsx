@@ -36,6 +36,7 @@ const Login = () => {
                 username: username,
                 password: pass
             }
+            console.log(payload);
             await dispatch(authUser(payload)).unwrap();
             setLogin(false);
         }

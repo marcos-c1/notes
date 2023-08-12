@@ -6,6 +6,7 @@ import { ThemeContext } from "./components/contexts/Theme";
 import { LoginContext } from "./components/contexts/Login";
 import { SelectedContext } from "./components/contexts/SelectedNote";
 import { ContentContext } from "./components/contexts/Content";
+import { NotesContext } from "./components/contexts/NotesByUserContext";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const defaultNotes = useContext(SelectedContext);
   const defaultLogin = useContext(LoginContext);
   const defaultContent = useContext(ContentContext);
+  const defaultNote = useContext(NotesContext);
 
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
@@ -20,6 +22,7 @@ function App() {
   const [colorScheme, setColorScheme] = useState("dark");
   const [selectedNote, setSelectedNote] = useState(defaultNotes);
   const [content, setContent] = useState(defaultContent);
+  const [noteByUser, setNotes] = useState(defaultNote)
 
   return (
     <Router>
@@ -27,12 +30,14 @@ function App() {
         <ThemeContext.Provider value={[colorScheme, setColorScheme]}>
           <SelectedContext.Provider value={[selectedNote, setSelectedNote]}>
             <ContentContext.Provider value={[content, setContent]}>
-              <main className="App">
-                <Routes>
-                  <Route path="/" Component={Content} />
-                  <Route path="/signup" Component={SignUp} />
-                </Routes>
-              </main>
+              <NotesContext.Provider value={[noteByUser, setNotes]}>
+                <main className="App">
+                  <Routes>
+                    <Route path="/" Component={Content} />
+                    <Route path="/signup" Component={SignUp} />
+                  </Routes>
+                </main>
+              </NotesContext.Provider>
             </ContentContext.Provider>
           </SelectedContext.Provider>
         </ThemeContext.Provider>

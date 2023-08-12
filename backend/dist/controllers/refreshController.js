@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const User = require('../models/User');
+const Note = require('../models/Note');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -19,14 +20,15 @@ const handleRefreshToken = (req, res) => __awaiter(void 0, void 0, void 0, funct
     else {
         const refreshToken = cookies.jwt;
         try {
-            const findUserByToken = yield User.findOne({ refreshToken: refreshToken }).exec();
+            const findUserByToken = yield User.findOne({ refreshToken: refreshToken }, { refreshToken: { $elemMatch: { refreshToken: String } } }).exec();
             // evaluate jwt
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => {
+            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
                 if (err || findUserByToken.username !== decoded.username)
                     return res.sendStatus(403);
                 const accessToken = jwt.sign({ "username": findUserByToken.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
-                res.json({ 'username': findUserByToken.username, 'accessToken': accessToken });
-            });
+                const notesFromUser = yield Note.find({ user: findUserByToken.id }).exec();
+                res.json({ 'id': findUserByToken._id, 'username': findUserByToken.username, 'accessToken': accessToken, 'notes': notesFromUser });
+            }));
         }
         catch (error) {
             res.status(500).json({ 'message': `Server error: ${error.message}` });

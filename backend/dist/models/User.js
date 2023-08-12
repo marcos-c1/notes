@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongodb_1 = require("mongodb");
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     fullname: {
@@ -17,6 +19,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    notes: [mongodb_1.ObjectId],
     refreshToken: String
 });
 module.exports = mongoose.model('User', userSchema);

@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const Note = require('../models/Note');
+const User = require('../models/User');
 const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield Note.find().exec();
@@ -18,8 +19,26 @@ const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ 'message': 'No data found' });
     }
 });
+const getNotesByUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const cookies = req.cookies;
+    if (!(cookies === null || cookies === void 0 ? void 0 : cookies.jwt)) {
+        res.status(401);
+    }
+    else {
+        try {
+            const refreshToken = cookies.jwt;
+            const user = yield User.findOne({ refreshToken: refreshToken }, { refreshToken: { $elemMatch: { refreshToken: String } } }).exec();
+            const result = yield Note.find({ user: user._id }).exec();
+            res.status(200).json(result);
+        }
+        catch (error) {
+            res.status(500).json({ 'message': `${error.message}` });
+        }
+    }
+});
 const getNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    console.log(id);
     try {
         const result = yield Note.findById(id).exec();
         res.status(200).json(result);
@@ -29,11 +48,16 @@ const getNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 const createNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const cookies = req.cookies;
+    const refreshToken = cookies.jwt;
     const { title, content } = req.body;
     const createdAt = new Date();
     try {
-        const result = yield Note.create({ title: title, content: content, createdAt: createdAt });
-        res.status(200).json(result);
+        const userById = yield User.findOne({ refreshToken: refreshToken }).exec();
+        const note = yield Note.create({ title: title, content: content, createdAt: createdAt, user: userById._id });
+        userById.notes.push(note);
+        yield userById.save();
+        res.status(200).json(note);
     }
     catch (error) {
         res.status(500).json({ 'message': `Note not created: ${error.message}` });
@@ -67,6 +91,7 @@ module.exports = {
     getNotes,
     getNoteById,
     createNote,
+    getNotesByUser,
     updateNote,
     deleteNoteById
 };

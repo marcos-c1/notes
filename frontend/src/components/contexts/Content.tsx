@@ -1,5 +1,6 @@
 import { createContext } from "react";
-import notes from '../../api/note';
+import notesAPI from '../../api/note';
 
-const defaultData = await notes.getAllNotes().then((r) => r.data);
-export const ContentContext = createContext(defaultData[0].content);
+//const defaultData = await notesAPI.fetchNotesByUser().then((r) => r.data);
+//defaultData[0].content
+export const ContentContext = createContext("");

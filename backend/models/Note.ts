@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 const mongoose = require("mongoose");
 
 const notesSchema = new mongoose.Schema({
@@ -11,7 +13,11 @@ const notesSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-		default: new Date()
+        default: new Date()
+    },
+    user: {
+        type: ObjectId,
+        ref: 'User'
     }
 });
 

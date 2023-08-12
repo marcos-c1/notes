@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -17,6 +19,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    notes: [ObjectId],
     refreshToken: String
 });
 

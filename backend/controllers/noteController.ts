@@ -1,4 +1,5 @@
 const Note = require('../models/Note');
+const User = require('../models/User');
 
 const getNotes = async (req, res) => {
 	try {
@@ -9,8 +10,28 @@ const getNotes = async (req, res) => {
 	}
 }
 
+const getNotesByUser = async (req, res) => {
+	const cookies = req.cookies
+
+	if (!cookies?.jwt) {
+		res.status(401);
+	} else {
+		try {
+			const refreshToken = cookies.jwt;
+
+			const user = await User.findOne({ refreshToken: refreshToken }, { refreshToken: { $elemMatch: { refreshToken: String } } }).exec();
+			const result = await Note.find({ user: user._id }).exec();
+			res.status(200).json(result)
+		} catch (error) {
+			res.status(500).json({ 'message': `${error.message}` });
+		}
+	}
+
+}
+
 const getNoteById = async (req, res) => {
 	const id = req.params.id;
+	console.log(id)
 	try {
 		const result = await Note.findById(id).exec();
 		res.status(200).json(result);
@@ -20,13 +41,20 @@ const getNoteById = async (req, res) => {
 }
 
 const createNote = async (req, res) => {
+	const cookies = req.cookies
+	const refreshToken = cookies.jwt;
 	const { title, content } = req.body;
 
 	const createdAt = new Date();
 
 	try {
-		const result = await Note.create({ title: title, content: content, createdAt: createdAt });
-		res.status(200).json(result);
+		const userById = await User.findOne({ refreshToken: refreshToken }).exec();
+		const note = await Note.create({ title: title, content: content, createdAt: createdAt, user: userById._id });
+
+		userById.notes.push(note);
+		await userById.save();
+
+		res.status(200).json(note);
 	} catch (error) {
 		res.status(500).json({ 'message': `Note not created: ${error.message}` })
 	}
@@ -40,6 +68,7 @@ const updateNote = async (req, res) => {
 		const note = await Note.findById(id).exec();
 		note.title = title;
 		note.content = content;
+
 		const result = await note.save();
 		res.status(200).json(result);
 	} catch (error) {
@@ -61,6 +90,7 @@ module.exports = {
 	getNotes,
 	getNoteById,
 	createNote,
+	getNotesByUser,
 	updateNote,
 	deleteNoteById
 }

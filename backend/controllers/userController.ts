@@ -32,7 +32,8 @@ const createUser = async (req, res) => {
                 "fullname": fullname,
                 "email": email,
                 "username": username,
-                "password": hashedPwd
+                "password": hashedPwd,
+                "notes": []
             });
             res.status(200).json({ 'message': `New user ${username} created!` });
         } catch (error) {

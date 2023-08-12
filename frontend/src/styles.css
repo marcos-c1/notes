@@ -118,6 +118,20 @@ button {
   z-index: 2;
 }
 
+.container__disconnect {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(43, 41, 41);
+  border-radius: 10px;
+  height: 150px;
+  width: 300px;
+  top: 25%;
+  z-index: 2;
+  left: 40%;
+  padding: 1.5em;
+}
+
 #btnLogin {
   padding: 0.5em;
   border-radius: 10px;
@@ -600,4 +614,19 @@ li {
 #btnGoBack:hover {
   padding: 1em;
   transition: 0.5s all ease-in-out;
+}
+
+#btnCancel,
+#btnYes {
+  margin-right: 1em;
+  border: none;
+  border-radius: 5px;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  font: inherit;
+}
+
+#btnYes {
+  background-color: rgba(200, 0, 0, 0.5);
+  color: white;
 }

@@ -14,12 +14,14 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 const handlerAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
+    console.log(username, password);
     if (!username || !password) {
         return res.status(400).json({ 'message': 'Username and password are required' });
     }
     else {
         try {
             const findUser = yield User.findOne({ username: username }).exec();
+            console.log(findUser);
             const match = yield bcrypt.compare(password, findUser.password);
             if (match) {
                 const accessToken = jwt.sign({ "username": findUser.username }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
@@ -34,6 +36,7 @@ const handlerAuth = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             }
         }
         catch (error) {
+            console.error(error.message);
             res.status(500).json({ 'message': `Server error ${error.message}` });
         }
     }

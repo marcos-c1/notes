@@ -1,22 +1,29 @@
 import { BsSearch } from "react-icons/bs";
 import { IoAddOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { BsTrash, BsDownload } from "react-icons/bs";
 import { SelectedContext } from "./contexts/SelectedNote";
 import { CiMenuKebab } from "react-icons/ci";
 import { ContentContext } from "./contexts/Content";
-import { addNewNote, deleteNoteById, updateNoteById } from "../redux/notes/noteSlice";
+import { addNewNote, deleteNoteById, updateNoteById, fetchNotesByUser } from "../redux/notes/noteSlice";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
+import { NotesContext } from "./contexts/NotesByUserContext";
 
 const Sidebar = () => {
     const submenu = document.querySelector(".sidebar__menu");
     const dispatch = useDispatch();
+    const [notesByUser, setNotes] = useContext(NotesContext);
     const [selectedNote, setSelectedNote] = useContext(SelectedContext);
     const [content, setContent] = useContext(ContentContext);
 
     const note = useSelector((state) => state.notes);
+    const user = useSelector((state) => state.user);
+
+    useEffect(() => {
+        dispatch(fetchNotesByUser()).unwrap();
+    }, [dispatch])
 
     document.addEventListener('click', (e: Event) => {
         if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
@@ -57,7 +64,6 @@ const Sidebar = () => {
         let notes = document.querySelectorAll(".sidebar__note");
         let element = e.target;
         let classList = element.classList;
-
         setSelectedNote(element.ariaLabel);
         setContent(note.notes[element.ariaLabel].content);
 
@@ -78,7 +84,6 @@ const Sidebar = () => {
         input.id = "renameNote";
 
         element?.replaceWith(input);
-        console.log(note);
         input.addEventListener('change', async (e) => {
             nodeNote.innerHTML = `${e.target.value}`;
             let newNote = {
@@ -86,7 +91,6 @@ const Sidebar = () => {
                 title: nodeNote.innerHTML,
                 content: note.notes[selectedNote].content
             }
-            console.log(newNote)
             await dispatch(updateNoteById(newNote)).unwrap();
             input.replaceWith(nodeNote);
         });
@@ -138,18 +142,16 @@ const Sidebar = () => {
                             <span className="icon icon__mode" id="addBtn" onClick={addNote}><IoAddOutline /></span>
                         </div>
                     </div>
-                    {note.loading && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Loading...</h2></div>}
-                    {!note.loading && note.error ? <div>Error.. {note.error}</div> : null}
                     {!note.loading && note.notes.length ? (
                         note.notes.map((item: Object, index: number) => {
-                            if (index == selectedNote) {
+                            if (index == 0) {
                                 return (
                                     <div className="flex__row sidebar__note checked"
                                         onMouseOver={(e) => e.target.classList.add("in")}
                                         onMouseLeave={(e) => e.target.classList.remove("in")}
                                         aria-label={index.toString()}
                                         onClick={handleClickNote} key={index}>
-                                        <li key={index} id={`note${index.toString()}`}>{item.title}</li>
+                                        <li key={index} aria-label={index.toString()} onClick={handleClickNote} id={`note${index.toString()}`}>{item.title}</li>
                                         <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                             <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
                                         </div>
@@ -162,7 +164,7 @@ const Sidebar = () => {
                                         onMouseLeave={(e) => e.target.classList.remove("in")}
                                         aria-label={index.toString()}
                                         onClick={handleClickNote} key={index}>
-                                        <li key={index} id={`note${index.toString()}`}>{item.title}</li>
+                                        <li key={index} aria-label={index.toString()} onClick={handleClickNote} id={`note${index.toString()}`}>{item.title}</li>
                                         <div className="sidebar__notes__icon" aria-label={index.toString()} onClick={openSubMenu} >
                                             <CiMenuKebab aria-label={index.toString()} id="menu_icon" />
                                         </div>

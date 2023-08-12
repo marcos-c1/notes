@@ -41,7 +41,8 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 "fullname": fullname,
                 "email": email,
                 "username": username,
-                "password": hashedPwd
+                "password": hashedPwd,
+                "notes": []
             });
             res.status(200).json({ 'message': `New user ${username} created!` });
         }

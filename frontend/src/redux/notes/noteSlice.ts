@@ -65,13 +65,26 @@ const noteSlice = createSlice({
             state.loading = false;
             state.notes = state.notes.map((n) => {
                 if (action.payload._id == n._id) {
-                    return { ...n, title: action.payload.title, content: action.payload.content };
+                    return { ...n, title: action.payload.title, content: action.payload.content, user: action.payload.user };
                 }
                 return n;
             });
             state.error = '';
         });
         builder.addCase(updateNoteById.rejected, (state, action) => {
+            state.loading = false;
+            state.notes = [...state.notes];
+            state.error = action.error.message;
+        });
+        builder.addCase(fetchNotesByUser.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchNotesByUser.fulfilled, (state, action) => {
+            state.loading = false;
+            state.notes = action.payload
+            state.error = '';
+        });
+        builder.addCase(fetchNotesByUser.rejected, (state, action) => {
             state.loading = false;
             state.notes = [...state.notes];
             state.error = action.error.message;
@@ -85,9 +98,9 @@ export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
     return notes;
 })
 
-export const addNewNote = createAsyncThunk('notes/addNewNote', async (newNote: { title: String, content: String }) => {
+export const addNewNote = createAsyncThunk('notes/addNewNote', async (newNote: { title: String, content: String, user: String }) => {
     // the inside "thunk function"]
-    const notes = await notesAPI.createNote(newNote.title, newNote.content).then((r) => r.data);
+    const notes = await notesAPI.createNote(newNote.title, newNote.content, newNote.user).then((r) => r.data);
     return notes;
 })
 
@@ -101,6 +114,11 @@ export const updateNoteById = createAsyncThunk('notes/updateNote', async (newNot
     // the inside "thunk function"]
     const note = notesAPI.updateNoteById(newNote.id, newNote.title, newNote.content).then((r) => r.data);
     return note;
+})
+
+export const fetchNotesByUser = createAsyncThunk('notes/fetchNotesByUser', async () => {
+    const notes = await notesAPI.fetchNotesByUser().then((r) => r.data);
+    return notes
 })
 
 export const { addNote, deleteNote } = noteSlice.actions;
