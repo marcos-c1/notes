@@ -38,8 +38,8 @@ const Content = () => {
                         <Sidebar />
                     </NotesContext.Provider>
                     <div className="container__editor" id="container__editor">
-                        {note.loading && user.loading ? <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log to your account on top right corner</h2></div> : null}
-                        {!note.loading && note.error && !disconnect ? <div> Error.. {note.error} {disconnect ? '1' : '0'}</div> : <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log to your account on top right corner</h2></div>}
+                        {note.loading && user.loading ? <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log or Sign in to your account on top right corner</h2></div> : null}
+                        {!note.loading && note.error && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log or Sign in to your account on top right corner</h2></div>}
                         {
                             note.notes.length > 0 ? (
                                 <div className="container__editor">

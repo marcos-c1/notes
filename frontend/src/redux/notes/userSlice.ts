@@ -5,7 +5,8 @@ const initialState = {
 	loading: false,
 	user: {},
 	hasData: false,
-	error: ''
+	error: '',
+	created: false
 }
 
 export const userSlice = createSlice({
@@ -25,10 +26,12 @@ export const userSlice = createSlice({
 		});
 		builder.addCase(postUser.fulfilled, (state, action) => {
 			state.loading = false;
+			state.created = true;
 			state.error = '';
 		});
 		builder.addCase(postUser.rejected, (state, action) => {
 			state.loading = false;
+			state.created = false;
 			state.error = action.error.message;
 		});
 		builder.addCase(authUser.pending, (state) => {

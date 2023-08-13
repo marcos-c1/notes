@@ -674,3 +674,20 @@ li {
     transform: rotate(360deg);
   }
 }
+
+#top__right__popup {
+  position: fixed;
+  right: 0;
+  top: 0;
+  color: white;
+  padding: 2em;
+  border-radius: 5px;
+}
+
+.error {
+  background-color: red;
+}
+
+.success {
+  background-color: green;
+}
