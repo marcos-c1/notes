@@ -6,7 +6,8 @@ const initialState = {
 	user: {},
 	hasData: false,
 	error: '',
-	created: false
+	created: false,
+	logout: false
 }
 
 export const userSlice = createSlice({
@@ -66,14 +67,17 @@ export const userSlice = createSlice({
 		});
 		builder.addCase(logoutUser.pending, (state) => {
 			state.loading = true;
+			state.logout = false;
 		});
 		builder.addCase(logoutUser.fulfilled, (state, action) => {
 			state.loading = false;
+			state.logout = true;
 			state.user = {};
 			state.error = '';
 		});
 		builder.addCase(logoutUser.rejected, (state, action) => {
 			state.loading = false;
+			state.logout = false;
 			state.error = action.error.message;
 		});
 	},

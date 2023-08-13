@@ -83,7 +83,7 @@ const SignUp = () => {
 						<input id="signup__input" placeholder="E-mail" type="text"></input>
 						{invalidEmail ? <small style={{ color: "red" }}>Invalid e-mail.</small> : null}
 						<input id="signup__input" placeholder="Username" type="text"></input>
-						{!user.loading && user.error ? <small style={{ color: "red" }}>User already exist.</small> : null}
+						{!user.loading && user.error && user.created ? <small style={{ color: "red" }}>User already exist.</small> : null}
 						<input id="signup__input" placeholder="********" minLength={8} type="password"></input>
 						<input id="signup__input" placeholder="********" type="password"></input>
 						{passEqual ? <small style={{ color: "red" }}>Password do not match.</small> : null}

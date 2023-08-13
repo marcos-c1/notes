@@ -12,13 +12,14 @@ import { LoginContext } from "./contexts/Login";
 import { NotesContext } from "./contexts/NotesByUserContext";
 import { show } from "@tauri-apps/api/app";
 import Disconnect from "./Disconnect";
+import { DisconnectContext } from "./contexts/Disconnect";
 
 const Menu = () => {
     const dispatch = useDispatch();
     const [notesByUser, setNote] = useContext(NotesContext);
     const [colorScheme, setColorScheme] = useContext(ThemeContext);
     const [login, setLogin] = useContext(LoginContext);
-    const [disconnect, setDisconnect] = useState(false);
+    const [disconnect, setDisconnect] = useContext(DisconnectContext);
 
     const user = useSelector((state) => state.user);
     const iconSize = 20;
@@ -116,31 +117,33 @@ const Menu = () => {
     return (
         <LoginContext.Provider value={[login, setLogin]}>
             <NotesContext.Provider value={[notesByUser, setNote]}>
-                <div className="container__menu theme">
-                    {login ? <div id="blur" onClick={handleHideBlur}></div> : null}
-                    <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
-                        <li className="icon" onClick={hideMenu}>
-                            <RxTextAlignJustify size={25} id="menu" />
-                        </li>
-                        <li id="logo" style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
-                        <ul className="container__menu__right" >
-                            <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
-                                <ThemeContext.Provider value={colorScheme}>
-                                    {colorScheme == "dark" ?
-                                        <MdOutlineLightMode id="light-mode" size={iconSize} /> :
-                                        <MdDarkMode id="dark-mode" size={iconSize} />}
-                                </ThemeContext.Provider>
+                <DisconnectContext.Provider value={[disconnect, setDisconnect]}>
+                    <div className="container__menu theme">
+                        {login ? <div id="blur" onClick={handleHideBlur}></div> : null}
+                        <ul style={{ alignItems: "center", height: "50vh", padding: "20px 10px", overflow: "hidden" }}>
+                            <li className="icon" onClick={hideMenu}>
+                                <RxTextAlignJustify size={25} id="menu" />
                             </li>
-                            <li>{!user.loading && user.user.username ? <span className="menu__login" onClick={() => setDisconnect(!disconnect)}>{user.user.username}</span> : <button onClick={() => setLogin(!login)} className="menu__login">Login</button>}</li>
+                            <li id="logo" style={{ margin: "0 auto" }}><img src={logo} width="70px" alt="Hey, I'm Marta!" /><span id="title">Notes</span></li>
+                            <ul className="container__menu__right" >
+                                <li className="icon icon__mode" id="btnTheme" onClick={switchMode}>
+                                    <ThemeContext.Provider value={colorScheme}>
+                                        {colorScheme == "dark" ?
+                                            <MdOutlineLightMode id="light-mode" size={iconSize} /> :
+                                            <MdDarkMode id="dark-mode" size={iconSize} />}
+                                    </ThemeContext.Provider>
+                                </li>
+                                <li>{!user.loading && user.user.username ? <span className="menu__login" onClick={() => setDisconnect(!disconnect)}>{user.user.username}</span> : <button onClick={() => setLogin(!login)} className="menu__login">Login</button>}</li>
+                            </ul>
+                            {
+                                disconnect ? disconnectModal() : null
+                            }
+                            {
+                                !login ? null : loginModal()
+                            }
                         </ul>
-                        {
-                            disconnect ? disconnectModal() : null
-                        }
-                        {
-                            !login ? null : loginModal()
-                        }
-                    </ul>
-                </div >
+                    </div >
+                </DisconnectContext.Provider>
             </NotesContext.Provider>
         </LoginContext.Provider >
     )
