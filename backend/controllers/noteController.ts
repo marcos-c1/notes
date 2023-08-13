@@ -78,9 +78,16 @@ const updateNote = async (req, res) => {
 
 const deleteNoteById = async (req, res) => {
 	const id = req.params.id;
+	const cookies = req.cookies
+	const refreshToken = cookies.jwt;
 	try {
+		const userById = await User.findOne({ refreshToken: refreshToken }).exec();
+		userById.notes = userById.notes.filter((note) => {
+			note != id
+		});
+		await userById.save();
 		const result = await Note.findByIdAndDelete(id).exec();
-		res.status(200).json({ 'message': `Note ${id} deleted!` });
+		res.status(200).json({ 'message': `Note ${result._id} deleted!` });
 	} catch (error) {
 		res.status(500).json({ 'message': `Note not deleted: ${error.message}` });
 	}

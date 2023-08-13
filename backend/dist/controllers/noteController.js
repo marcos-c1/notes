@@ -79,9 +79,16 @@ const updateNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const deleteNoteById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const id = req.params.id;
+    const cookies = req.cookies;
+    const refreshToken = cookies.jwt;
     try {
+        const userById = yield User.findOne({ refreshToken: refreshToken }).exec();
+        userById.notes = userById.notes.filter((note) => {
+            note != id;
+        });
+        yield userById.save();
         const result = yield Note.findByIdAndDelete(id).exec();
-        res.status(200).json({ 'message': `Note ${id} deleted!` });
+        res.status(200).json({ 'message': `Note ${result._id} deleted!` });
     }
     catch (error) {
         res.status(500).json({ 'message': `Note not deleted: ${error.message}` });
