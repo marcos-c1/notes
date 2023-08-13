@@ -10,6 +10,7 @@ import { ContentContext } from "./contexts/Content";
 import { LoginContext } from "./contexts/Login";
 import { NotesContext } from "./contexts/NotesByUserContext";
 import { DisconnectContext } from "./contexts/Disconnect";
+import { handleErrorService } from "../utils/errorHandler";
 
 const Content = () => {
 
@@ -38,8 +39,8 @@ const Content = () => {
                         <Sidebar />
                     </NotesContext.Provider>
                     <div className="container__editor" id="container__editor">
-                        {note.loading && user.loading ? <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log or Sign in to your account on top right corner</h2></div> : null}
-                        {!note.loading && note.error && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>Log or Sign in to your account on top right corner</h2></div>}
+                        {note.loading && user.loading ? <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>{handleErrorService(note.status)}</h2></div> : null}
+                        {!note.loading && note.error && <div className="sidebar__loading"><h2 style={{ textAlign: "center" }}>{handleErrorService(note.status)}</h2></div>}
                         {
                             note.notes.length > 0 ? (
                                 <div className="container__editor">
