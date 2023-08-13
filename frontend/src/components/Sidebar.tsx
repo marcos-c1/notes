@@ -8,7 +8,6 @@ import { SelectedContext } from "./contexts/SelectedNote";
 import { CiMenuKebab } from "react-icons/ci";
 import { ContentContext } from "./contexts/Content";
 import { addNewNote, deleteNoteById, updateNoteById, fetchNotesByUser } from "../redux/notes/noteSlice";
-import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { NotesContext } from "./contexts/NotesByUserContext";
 
 const Sidebar = () => {
@@ -25,7 +24,7 @@ const Sidebar = () => {
         dispatch(fetchNotesByUser()).unwrap();
     }, [dispatch])
 
-    document.addEventListener('click', (e: Event) => {
+    document.addEventListener('click', (e) => {
         if (!submenu?.contains(e.target) && e.target.id != "menu_icon" && !e.target.classList.contains("in") && !e.target.classList.contains("sidebar__context__menu")) {
             hideSubmenu();
         }

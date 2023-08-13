@@ -7,7 +7,8 @@ const initialState = {
 	hasData: false,
 	error: '',
 	created: false,
-	logout: false
+	logout: false,
+	status: 0
 }
 
 export const userSlice = createSlice({
@@ -33,6 +34,7 @@ export const userSlice = createSlice({
 		builder.addCase(postUser.rejected, (state, action) => {
 			state.loading = false;
 			state.created = false;
+			state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
 			state.error = action.error.message;
 		});
 		builder.addCase(authUser.pending, (state) => {
@@ -47,7 +49,24 @@ export const userSlice = createSlice({
 		});
 		builder.addCase(authUser.rejected, (state, action) => {
 			state.loading = false;
+			state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
 			state.error = action.error.message;
+			state.hasData = false;
+		});
+		builder.addCase(refreshToken.pending, (state) => {
+			state.loading = true;
+			state.hasData = false;
+		});
+		builder.addCase(refreshToken.fulfilled, (state, action) => {
+			state.loading = false;
+			state.user = { ...state.user, ...action.payload };
+			state.hasData = true;
+			state.error = '';
+		});
+		builder.addCase(refreshToken.rejected, (state, action) => {
+			state.loading = false;
+			state.error = action.error.message;
+			state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
 			state.hasData = false;
 		});
 		builder.addCase(getUserById.pending, (state) => {
@@ -63,6 +82,7 @@ export const userSlice = createSlice({
 		builder.addCase(getUserById.rejected, (state, action) => {
 			state.loading = false;
 			state.error = action.error.message;
+			state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
 			state.hasData = false;
 		});
 		builder.addCase(logoutUser.pending, (state) => {
@@ -78,6 +98,7 @@ export const userSlice = createSlice({
 		builder.addCase(logoutUser.rejected, (state, action) => {
 			state.loading = false;
 			state.logout = false;
+			state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
 			state.error = action.error.message;
 		});
 	},
@@ -98,7 +119,7 @@ export const authUser = createAsyncThunk('users/authUser', async (payload: { use
 	return accessToken
 })
 
-export const refreshToken = createAsyncThunk('users/authUser', async () => {
+export const refreshToken = createAsyncThunk('users/refreshToken', async () => {
 	const user = await userAPI.findUserByToken();
 	return user
 })

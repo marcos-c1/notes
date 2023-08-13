@@ -5,6 +5,7 @@ const initialState = {
     loading: false,
     notes: [],
     error: '',
+    status: 0,
 }
 
 const noteSlice = createSlice({
@@ -81,19 +82,19 @@ const noteSlice = createSlice({
         });
         builder.addCase(fetchNotesByUser.fulfilled, (state, action) => {
             state.loading = false;
-            state.notes = action.payload
+            state.notes = action.payload;
             state.error = '';
         });
         builder.addCase(fetchNotesByUser.rejected, (state, action) => {
             state.loading = false;
             state.notes = [...state.notes];
+            state.status = Number(action.error.message.substring(action.error.message.length, action.error.message.length - 3));
             state.error = action.error.message;
         });
     },
 });
 
 export const fetchNotes = createAsyncThunk('notes/fetchNotes', async () => {
-    // the inside "thunk function"]
     const notes = await notesAPI.getAllNotes().then((r) => r.data);
     return notes;
 })
@@ -117,8 +118,8 @@ export const updateNoteById = createAsyncThunk('notes/updateNote', async (newNot
 })
 
 export const fetchNotesByUser = createAsyncThunk('notes/fetchNotesByUser', async () => {
-    const notes = await notesAPI.fetchNotesByUser().then((r) => r.data);
-    return notes
+    const note = await notesAPI.fetchNotesByUser().then((r) => r.data);
+    return note;
 })
 
 export const { addNote, deleteNote } = noteSlice.actions;

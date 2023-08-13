@@ -10,7 +10,6 @@ import Login from "./Login";
 import { useDispatch, useSelector } from "react-redux";
 import { LoginContext } from "./contexts/Login";
 import { NotesContext } from "./contexts/NotesByUserContext";
-import { show } from "@tauri-apps/api/app";
 import Disconnect from "./Disconnect";
 import { DisconnectContext } from "./contexts/Disconnect";
 
