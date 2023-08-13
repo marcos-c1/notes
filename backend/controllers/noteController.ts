@@ -14,7 +14,7 @@ const getNotesByUser = async (req, res) => {
 	const cookies = req.cookies
 
 	if (!cookies?.jwt) {
-		res.status(401);
+		res.status(401).json({ 'message': 'JWT not found' });
 	} else {
 		try {
 			const refreshToken = cookies.jwt;

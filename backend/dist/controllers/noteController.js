@@ -22,7 +22,7 @@ const getNotes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 const getNotesByUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const cookies = req.cookies;
     if (!(cookies === null || cookies === void 0 ? void 0 : cookies.jwt)) {
-        res.status(401);
+        res.status(401).json({ 'message': 'JWT not found' });
     }
     else {
         try {

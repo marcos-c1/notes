@@ -7,6 +7,7 @@ import { LoginContext } from "./components/contexts/Login";
 import { SelectedContext } from "./components/contexts/SelectedNote";
 import { ContentContext } from "./components/contexts/Content";
 import { NotesContext } from "./components/contexts/NotesByUserContext";
+import { DisconnectContext } from "./components/contexts/Disconnect";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const defaultLogin = useContext(LoginContext);
   const defaultContent = useContext(ContentContext);
   const defaultNote = useContext(NotesContext);
+  const defaultDisconnect = useContext(DisconnectContext);
 
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
@@ -22,7 +24,8 @@ function App() {
   const [colorScheme, setColorScheme] = useState("dark");
   const [selectedNote, setSelectedNote] = useState(defaultNotes);
   const [content, setContent] = useState(defaultContent);
-  const [noteByUser, setNotes] = useState(defaultNote)
+  const [noteByUser, setNotes] = useState(defaultNote);
+  const [disconnect, setDisconnect] = useState(defaultDisconnect);
 
   return (
     <Router>
@@ -31,12 +34,14 @@ function App() {
           <SelectedContext.Provider value={[selectedNote, setSelectedNote]}>
             <ContentContext.Provider value={[content, setContent]}>
               <NotesContext.Provider value={[noteByUser, setNotes]}>
-                <main className="App">
-                  <Routes>
-                    <Route path="/" Component={Content} />
-                    <Route path="/signup" Component={SignUp} />
-                  </Routes>
-                </main>
+                <DisconnectContext.Provider value={[disconnect, setDisconnect]}>
+                  <main className="App">
+                    <Routes>
+                      <Route path="/" Component={Content} />
+                      <Route path="/signup" Component={SignUp} />
+                    </Routes>
+                  </main>
+                </DisconnectContext.Provider>
               </NotesContext.Provider>
             </ContentContext.Provider>
           </SelectedContext.Provider>

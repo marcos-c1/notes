@@ -1,6 +1,4 @@
-import { VscGithub } from "react-icons/vsc";
-import { SiGmail, SiWorldhealthorganization } from "react-icons/si";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { authUser } from "../redux/notes/userSlice.ts";
 import { ThemeContext } from "../components/contexts/Theme.tsx"
 import logo from "../img/logo_2.png"
@@ -8,8 +6,10 @@ import {
     BrowserRouter as Router,
     Link
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LoginContext } from "./contexts/Login.tsx";
+import Loading from "./Loading.tsx";
+import { DisconnectContext } from "./contexts/Disconnect.tsx";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -17,9 +17,21 @@ const Login = () => {
     const [hasUsername, setHasUsername] = useState(false);
     const [hasPass, setHasPass] = useState(false);
     const [theme, setTheme] = useContext(ThemeContext);
+    const [disconnect, setDisconnect] = useContext(DisconnectContext);
+    const user = useSelector((state) => state.user);
+    const note = useSelector((state) => state.notes);
+    const [display, setDisplay] = useState("none");
+    const [hasError, setHasError] = useState(note.error ? true : false);
+
+    useEffect(() => {
+        dispatch({ type: 'RESET_STATE' })
+    }, [dispatch])
 
     async function handleSubmit(e) {
+        setHasError(!hasError);
+
         e.preventDefault();
+
         let element = e.target;
 
         const username = element[0]?.value;
@@ -36,9 +48,7 @@ const Login = () => {
                 username: username,
                 password: pass
             }
-            console.log(payload);
             await dispatch(authUser(payload)).unwrap();
-            setLogin(false);
         }
         element[0].value = ""
         element[1].value = ""
@@ -47,12 +57,16 @@ const Login = () => {
     return (
         <div className="container__login white_font" id="login">
             <img style={{ alignSelf: "center", overflow: "hidden" }} src={logo} width="70px" alt="Hey, I'm Marta!" /><span style={{ textAlign: "center", marginBottom: "0.5em" }} id="title">Notes</span>
-            <form action="" onSubmit={handleSubmit} method="post">
+            <form action="" onSubmit={(e) => { setDisplay("block"); handleSubmit(e) }} method="post">
                 <input type="text" placeholder="Username" id="username"></input>
                 <input type="password" placeholder="Password" id="password"></input>
                 <button id="btnLogin">Enter</button>
             </form>
             <small id="signUp" style={{ marginTop: "1em", marginLeft: "1em" }}><Link to="/signup" style={{ textDecoration: "none", font: "inherit", fontSize: "1em", color: "#f7f7f7" }}>Doesn't have an account?</Link></small>
+            <Loading display={display} />
+            {!user.loading && user.hasData ? (
+                window.location.reload()
+            ) : null}
         </div>
     )
 }

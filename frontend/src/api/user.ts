@@ -23,6 +23,9 @@ const findUserByToken = async () => {
     return await axios.get(`http://localhost:5000/refresh`).then((response) => response.data)
 }
 
+const logoutUser = async () => {
+    return await axios.get('http://localhost:5000/logout').then((r) => r.data);
+}
 const deleteUserById = async (id: Number) => {
     return await axios.delete(`http://localhost:5000/user/${id}`)
 }
@@ -33,5 +36,6 @@ export default {
     deleteUserById,
     createUser,
     authUser,
-    findUserByToken
+    findUserByToken,
+    logoutUser
 }

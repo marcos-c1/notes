@@ -43,6 +43,18 @@ const handlerAuth = async (req, res) => {
 
 }
 
+const handlerLogout = async (req, res) => {
+	// Set token to none and expire after 5 seconds
+	res.cookie('jwt', 'none', {
+		expires: new Date(Date.now() + 5 * 1000),
+		httpOnly: true,
+	})
+	res
+		.status(200)
+		.json({ 'message': 'User logged out successfully' })
+}
+
 module.exports = {
-	handlerAuth
+	handlerAuth,
+	handlerLogout
 }
